@@ -1,3 +1,4 @@
+# Empacote a aplicação maven: mvn package
 # Para buildar dockerfile: docker build -t trabalho-esii-api .
 # Para rodar aplicação: docker run -p 8080:8080 trabalho-esii-api
 
