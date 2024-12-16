@@ -6,6 +6,7 @@ import com.project.esii.project_esii.user.domain.dto.UserFormDTO;
 import com.project.esii.project_esii.user.domain.entity.User;
 import com.project.esii.project_esii.user.mapper.UserMapper;
 import com.project.esii.project_esii.user.repository.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,8 @@ public class UserService {
         return UserMapper.convertEntityToPlainUserDTO(savedUser);
     }
 
-    public void sendVerificationEmail(Long id, String email) {
-        String emailMessage = emailSenderService.sendVerificationEmail(email, id);
-        log.info(emailMessage);
+    public boolean sendVerificationEmail(Long id, String email) {
+        return emailSenderService.sendVerificationEmail(email, id);
     }
 
 
@@ -56,5 +56,16 @@ public class UserService {
     public void setEmailToVerified(User user) {
         user.setIsEmailVerified(true);
         userRepository.save(user);
+    }
+
+    public void delete(Long id) {
+        User user = findById(id);
+        userRepository.delete(user);
+    }
+
+    private User findById(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException()
+        );
     }
 }

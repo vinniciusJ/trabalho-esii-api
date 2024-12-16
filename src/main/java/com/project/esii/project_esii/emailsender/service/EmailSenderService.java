@@ -3,6 +3,7 @@ package com.project.esii.project_esii.emailsender.service;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.aspectj.weaver.patterns.ExactTypePattern;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,7 +16,7 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public String sendVerificationEmail(String dstEmail, Long userId) {
+    public boolean sendVerificationEmail(String dstEmail, Long userId) {
         String link = "http://localhost:8080/user/verify-email/" + userId;
 
         // Corpo do e-mail com HTML
@@ -35,21 +36,16 @@ public class EmailSenderService {
         try {
             log.info("Enviando email!");
 
-            // Configurando e enviando e-mail com HTML
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(dstEmail);
-            helper.setSubject("Verifique seu cadastro!");
-            helper.setText(emailBody, true); // 'true' habilita HTML no corpo do e-mail
+            helper.setSubject("Verifique seu cadastro em Eventos+!");
+            helper.setText(emailBody, true);
 
             javaMailSender.send(mimeMessage);
-
-            log.info("E-mail enviado");
-            return "E-mail enviado!";
+            return true;
         } catch (Exception e) {
-            e.printStackTrace();
-            log.error("Não foi possível enviar o e-mail");
-            return "Não foi possível enviar o e-mail";
+            return false;
         }
     }
 }
