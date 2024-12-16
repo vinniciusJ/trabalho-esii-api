@@ -3,7 +3,7 @@ package com.project.esii.project_esii.event_type.service;
 import com.project.esii.project_esii.event_type.domain.dto.EventTypeDTO;
 import com.project.esii.project_esii.event_type.domain.entity.EventType;
 import com.project.esii.project_esii.event_type.repository.EventTypeRepository;
-import com.project.esii.project_esii.mappers.EventTypeMapper;
+import com.project.esii.project_esii.event_type.mapper.EventTypeMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

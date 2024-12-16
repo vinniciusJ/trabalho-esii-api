@@ -1,6 +1,6 @@
 package com.project.esii.project_esii.event.domain.entity;
 
-import com.project.esii.project_esii.event_action.entity.EventAction;
+import com.project.esii.project_esii.event_action.domain.entity.EventAction;
 import com.project.esii.project_esii.event_type.domain.entity.EventType;
 import com.project.esii.project_esii.user.domain.entity.User;
 import jakarta.persistence.*;
@@ -37,6 +37,6 @@ public class Event {
     @OneToMany
     private List<User> participants;
 
-    @OneToMany
+    @OneToMany(mappedBy = "event")
     private List<EventAction> eventActions;
 }

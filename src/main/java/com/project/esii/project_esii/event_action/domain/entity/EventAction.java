@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.event_action.entity;
+package com.project.esii.project_esii.event_action.domain.entity;
 
 import com.project.esii.project_esii.event.domain.entity.Event;
 import com.project.esii.project_esii.user.domain.entity.User;

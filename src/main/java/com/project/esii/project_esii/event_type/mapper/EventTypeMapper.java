@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.mappers;
+package com.project.esii.project_esii.event_type.mapper;
 
 import com.project.esii.project_esii.event_type.domain.dto.EventTypeDTO;
 import com.project.esii.project_esii.event_type.domain.entity.EventType;
