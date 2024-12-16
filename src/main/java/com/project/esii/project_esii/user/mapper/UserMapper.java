@@ -1,6 +1,7 @@
 package com.project.esii.project_esii.user.mapper;
 
 import com.project.esii.project_esii.user.domain.dto.PlainUserDTO;
+import com.project.esii.project_esii.user.domain.dto.UserDetailsDTO;
 import com.project.esii.project_esii.user.domain.dto.UserFormDTO;
 import com.project.esii.project_esii.user.domain.entity.User;
 
@@ -22,5 +23,15 @@ public class UserMapper {
         user.setPhone(userFormDTO.phone());
 
         return user;
+    }
+
+    public static UserDetailsDTO convertEntityToUserDetailsDTO(User user) {
+        return new UserDetailsDTO(
+                user.getId(),
+                user.getName(),
+                user.getCpf(),
+                user.getEmail(),
+                user.getPhone()
+        );
     }
 }
