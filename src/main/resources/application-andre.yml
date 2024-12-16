@@ -1,11 +1,25 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/events
-    username: postgress
+    username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
+
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: egsoft502@gmail.com
+    password: vzjr nnab ffwq rput
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+

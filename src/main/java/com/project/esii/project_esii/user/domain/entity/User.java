@@ -1,7 +1,6 @@
 package com.project.esii.project_esii.user.domain.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import lombok.*;
 
 @Entity
@@ -15,10 +14,12 @@ public class User {
 
     private String name;
 
+    @Column(unique = true)
     private String cpf;
 
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     private String phone;
