@@ -1,5 +1,6 @@
 package com.project.esii.project_esii.activity.domain.entity;
 
+import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -33,4 +34,9 @@ public class Activity {
     @NotNull
     @Column(nullable = false)
     private String address;
+
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "event_manager_id", nullable = false)
+    private EventManager eventManager;
 }
