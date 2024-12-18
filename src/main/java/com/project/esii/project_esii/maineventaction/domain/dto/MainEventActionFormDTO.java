@@ -1,16 +1,11 @@
 package com.project.esii.project_esii.maineventaction.domain.dto;
 
-import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
-import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public record MainEventActionDetailsDTO(
-
-        @NotNull
-        Long id,
+public record MainEventActionFormDTO(
 
         @NotBlank
         String title,
@@ -29,13 +24,14 @@ public record MainEventActionDetailsDTO(
         String address,
 
         @NotNull
-        EventManagerDetailsDTO eventManagerDetailsDTO,
+        Long eventManagerId,
 
 
         @NotNull
         Integer quantityVacancies,
 
         @NotNull
-        MainEventDetailsDTO mainEventDetailsDTO
+        Long mainEventId
 ) {
+
 }
