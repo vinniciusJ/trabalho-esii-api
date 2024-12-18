@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/main-event-type")
 @RequiredArgsConstructor
@@ -25,8 +27,15 @@ public class MainEventTypeController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertMainEventTypeToMainEventTypeDetailsDTO(mainEventType));
     }
 
+    @GetMapping("/all")
+    public ResponseEntity<List<MainEventTypeDetailsDTO>> listAll(Pageable pageable) {
+        List<MainEventType> mainEventTypeList = mainEventTypeService.findAll();
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertToMainEventTypeDetailsDTOList(mainEventTypeList));
+    }
+
     @GetMapping
-    public ResponseEntity<Page<MainEventTypeDetailsDTO>> list(@RequestBody MainEventTypeFormDTO mainEventTypeFormDTO, Pageable pageable) {
+    public ResponseEntity<Page<MainEventTypeDetailsDTO>> list(Pageable pageable) {
         Page<MainEventType> mainEventTypePage = mainEventTypeService.findAll(pageable);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertToMainEventTypeDetailsDTOPage(mainEventTypePage));

@@ -21,5 +21,7 @@ public interface MainEventMapper {
     @Mapping(target = "id", ignore = true)
     MainEvent convertMainEventFormDTOToMainEvent(MainEventFormDTO mainEventFormDTO, EventManager eventManager, MainEventType mainEventType);
 
+    @Mapping(source = "mainEvent.mainEventType", target = "mainEventTypeDetailsDTO")
+    @Mapping(source = "mainEvent.eventManager", target = "eventManagerDetailsDTO")
     MainEventDetailsDTO convertMainEventToMainEventDetailsDTO(MainEvent mainEvent);
 }
