@@ -23,9 +23,8 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     public ResponseEntity<RecoveryJwtTokenDto> authenticateUser(@RequestBody LoginUserDto loginUserDto) {
-        BaseUser authenticatedUser = authenticationService.authenticate(loginUserDto.email(), loginUserDto.password());
-        RecoveryJwtTokenDto token = jwtTokenService.generateToken(authenticatedUser);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        RecoveryJwtTokenDto recoveryJwtTokenDto = authenticationService.authenticate(loginUserDto.email(), loginUserDto.password());
+        return new ResponseEntity<>(recoveryJwtTokenDto, HttpStatus.OK);
     }
 
 }

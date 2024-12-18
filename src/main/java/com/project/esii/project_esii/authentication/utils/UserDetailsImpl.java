@@ -45,6 +45,8 @@ public class UserDetailsImpl implements UserDetails {
         return baseUser.getName();
     }
 
+    public String getPersonRole() {return baseUser.getPersonRole().toString();}
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

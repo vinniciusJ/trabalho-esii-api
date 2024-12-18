@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.stream.Collectors;
 
 @Service
 public class JwtTokenService {
@@ -39,6 +38,27 @@ public class JwtTokenService {
                     .withClaim("name", user.getName())
                     .withClaim("email", user.getEmail())
                     .sign(algorithm));
+        } catch (JWTCreationException exception) {
+            throw new JWTCreationException("Erro ao gerar token.", exception);
+        }
+    }
+
+    public String generateToken(UserDetailsImpl userDetails) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(SECRET_KEY);
+
+            String role = userDetails.getPersonRole();
+
+            return JWT.create()
+                    .withIssuer(ISSUER)
+                    .withIssuedAt(creationDate())
+                    .withExpiresAt(expirationDate())
+                    .withSubject(userDetails.getEmail())
+                    .withClaim("role", role)
+                    .withClaim("cpf", userDetails.getCpf())
+                    .withClaim("name", userDetails.getName())
+                    .withClaim("email", userDetails.getEmail())
+                    .sign(algorithm);
         } catch (JWTCreationException exception) {
             throw new JWTCreationException("Erro ao gerar token.", exception);
         }

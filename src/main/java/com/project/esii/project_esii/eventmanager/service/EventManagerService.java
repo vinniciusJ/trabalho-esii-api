@@ -1,13 +1,14 @@
 package com.project.esii.project_esii.eventmanager.service;
 
-import com.project.esii.project_esii.authentication.domain.entity.BaseUser;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.mapper.EventManagerMapper;
 import com.project.esii.project_esii.eventmanager.repository.EventManagerRepository;
 import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -25,6 +26,9 @@ public class EventManagerService {
 
     public EventManager save(EventManagerFormDTO eventManagerFormDTO) {
         EventManager eventManager = convertEventManagerFormDTOToEventManager(eventManagerFormDTO);
+
+        String encodedPassword = new BCryptPasswordEncoder().encode(eventManager.getPassword());
+        eventManager.setPassword(encodedPassword);
 
         return eventManagerRepository.save(eventManager);
     }

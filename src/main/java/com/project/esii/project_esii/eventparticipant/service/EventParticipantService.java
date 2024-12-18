@@ -7,8 +7,10 @@ import com.project.esii.project_esii.eventparticipant.domain.entity.EventPartici
 import com.project.esii.project_esii.eventparticipant.mapper.EventParticipantMapper;
 import com.project.esii.project_esii.eventparticipant.repository.EventParticipantRepository;
 import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Log4j2
@@ -21,7 +23,10 @@ public class EventParticipantService {
 
     public EventParticipant save(EventParticipantFormDTO eventParticipantFormDTO) {
         EventParticipant eventParticipant = convertEventParticipantFormDTOToEventParticipant(eventParticipantFormDTO);
-        log.info(eventParticipant);
+
+        String encodedPassword = new BCryptPasswordEncoder().encode(eventParticipant.getPassword());
+        eventParticipant.setPassword(encodedPassword);
+
         return eventParticipantRepository.save(eventParticipant);
     }
 
