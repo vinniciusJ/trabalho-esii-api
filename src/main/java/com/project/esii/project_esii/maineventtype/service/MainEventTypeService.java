@@ -1,10 +1,10 @@
 package com.project.esii.project_esii.maineventtype.service;
 
 import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.maineventtype.MainEventTypeMapper;
 import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDetailsDTO;
 import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeFormDTO;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
+import com.project.esii.project_esii.maineventtype.mapper.MainEventTypeMapper;
 import com.project.esii.project_esii.maineventtype.repository.MainEventTypeRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

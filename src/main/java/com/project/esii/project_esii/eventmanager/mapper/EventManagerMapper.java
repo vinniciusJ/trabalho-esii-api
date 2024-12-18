@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.eventmanager;
+package com.project.esii.project_esii.eventmanager.mapper;
 
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
