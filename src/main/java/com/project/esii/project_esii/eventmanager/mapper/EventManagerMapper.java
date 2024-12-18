@@ -10,7 +10,6 @@ import org.mapstruct.Mapping;
 public interface EventManagerMapper {
 
     @Mapping(source = "eventManagerFormDTO.cpfNumber", target = "cpf.cpfNumber")
-    @Mapping(source = "eventManagerFormDTO.personRole", target = "personRole")
     EventManager convertEventManagerFormDTOToEventManager(EventManagerFormDTO eventManagerFormDTO);
 
     @Mapping(source = "eventManager.cpf.cpfNumber", target = "cpfNumber")

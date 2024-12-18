@@ -19,9 +19,6 @@ public record EventParticipantFormDTO(
         String email,
 
         @NotBlank
-        String password,
-
-        @NotNull
-        PersonRole personRole
+        String password
 ) {
 }

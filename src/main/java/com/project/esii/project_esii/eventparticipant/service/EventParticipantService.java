@@ -1,6 +1,7 @@
 package com.project.esii.project_esii.eventparticipant.service;
 
 import com.project.esii.project_esii.authentication.domain.entity.BaseUser;
+import com.project.esii.project_esii.enums.PersonRole;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDetailsDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
@@ -23,6 +24,8 @@ public class EventParticipantService {
 
     public EventParticipant save(EventParticipantFormDTO eventParticipantFormDTO) {
         EventParticipant eventParticipant = convertEventParticipantFormDTOToEventParticipant(eventParticipantFormDTO);
+
+        eventParticipant.setPersonRole(PersonRole.ROLE_EVENT_PARTICIPANT);
 
         String encodedPassword = new BCryptPasswordEncoder().encode(eventParticipant.getPassword());
         eventParticipant.setPassword(encodedPassword);

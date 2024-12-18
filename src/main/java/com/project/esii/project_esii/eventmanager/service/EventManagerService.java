@@ -1,5 +1,6 @@
 package com.project.esii.project_esii.eventmanager.service;
 
+import com.project.esii.project_esii.enums.PersonRole;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
@@ -25,6 +26,8 @@ public class EventManagerService {
 
     public EventManager save(EventManagerFormDTO eventManagerFormDTO) {
         EventManager eventManager = convertEventManagerFormDTOToEventManager(eventManagerFormDTO);
+
+        eventManager.setPersonRole(PersonRole.ROLE_EVENT_MANAGER);
 
         String encodedPassword = new BCryptPasswordEncoder().encode(eventManager.getPassword());
         eventManager.setPassword(encodedPassword);
