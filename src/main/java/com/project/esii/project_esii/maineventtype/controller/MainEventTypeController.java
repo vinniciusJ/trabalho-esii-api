@@ -28,7 +28,7 @@ public class MainEventTypeController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<MainEventTypeDetailsDTO>> listAll(Pageable pageable) {
+    public ResponseEntity<List<MainEventTypeDetailsDTO>> listAll() {
         List<MainEventType> mainEventTypeList = mainEventTypeService.findAll();
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertToMainEventTypeDetailsDTOList(mainEventTypeList));
