@@ -26,43 +26,32 @@ public class SecurityConfiguration {
 
     private final UserAuthenticationFilter userAuthenticationFilter;
 
-    public static final String[] ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED = {
-            // authentication
+    public static final String[] ENDPOINTS_PUBLIC = {
+            "/event-participant", // Criar participante
+            "/main-event-type",   // Listar tipos de evento
+            "/main-event",         // Listar eventos
             "/authentication/login",
-
             "/swagger-ui/*",
             "/swagger-ui.html",
             "/swagger-ui/**",
             "/v3/api-docs/**",
-
-
-            // Event Participant
-            "/event-participant/{id}",
-            "/event-participant",
-            "/event-participant/verify-email/{id}",
-
-            // Event Manager
-            "/event-manager",
-            "/event-manager/verify-email/{id}",
-            "/event-manager/{id}"
     };
 
-    public static final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {
-
+    public static final String[] ENDPOINTS_PARTICIPANT = {
+            "/event-participant/{id}", // Obter participante por ID
+            "/event-participant/{id}"  // Deletar participante
     };
 
-    public static final String[] ENDPOINTS_EVENT_PARTICIPANT = {
-
+    public static final String[] ENDPOINTS_MANAGER = {
+            "/event-manager/{id}",       // Obter gerenciador por ID
+            "/main-event",               // Criar evento
+            "/main-event-action",        // Criar ação
+            "/main-event/{id}",          // Deletar evento
+            "/main-event-action/{id}"    // Deletar ação
     };
-
-    public static final String[] ENDPOINTS_EVENT_MANAGER = {
-            // Main Event
-            "/main-event/"
-    };
-
 
     public static final String[] ENDPOINTS_ADMIN = {
-
+            "/**" // Admin tem acesso a tudo
     };
 
     @Bean
@@ -82,23 +71,18 @@ public class SecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
 
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_NOT_REQUIRED).permitAll()
-                        .requestMatchers(ENDPOINTS_WITH_AUTHENTICATION_REQUIRED).authenticated()
+                        .requestMatchers(HttpMethod.POST, ENDPOINTS_PUBLIC).permitAll()
+                        .requestMatchers(HttpMethod.GET, ENDPOINTS_PUBLIC).permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/main-event", "/main-event/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/main-event-action", "/main-event-action/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/main-event-type", "/main-event-type/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, ENDPOINTS_PARTICIPANT).hasRole("EVENT_PARTICIPANT")
+                        .requestMatchers(HttpMethod.DELETE, ENDPOINTS_PARTICIPANT).hasRole("EVENT_PARTICIPANT")
 
-                        .requestMatchers(HttpMethod.POST, "/main-event", "/main-event/**").hasRole("EVENT_MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/main-event", "/main-event/**").hasRole("EVENT_MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/main-event-action", "/main-event-action/**").hasRole("EVENT_MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/main-event-action", "/main-event-action/**").hasRole("EVENT_MANAGER")
-                        .requestMatchers(HttpMethod.POST, "/main-event-type", "/main-event-type/**").hasRole("EVENT_MANAGER")
-                        .requestMatchers(HttpMethod.DELETE, "/main-event-type", "/main-event-type/**").hasRole("EVENT_MANAGER")
+                        .requestMatchers(HttpMethod.GET, ENDPOINTS_MANAGER).hasRole("EVENT_MANAGER")
+                        .requestMatchers(HttpMethod.POST, ENDPOINTS_MANAGER).hasRole("EVENT_MANAGER")
+                        .requestMatchers(HttpMethod.DELETE, ENDPOINTS_MANAGER).hasRole("EVENT_MANAGER")
 
-//                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
-//                        .requestMatchers(ENDPOINTS_EVENT_PARTICIPANT).hasRole("EVENT_PARTICIPANT")
-//                        .requestMatchers(ENDPOINTS_EVENT_MANAGER).hasRole("EVENT_MANAGER")
+                        .requestMatchers(ENDPOINTS_ADMIN).hasRole("ADMIN")
+
                         .anyRequest().denyAll()
                 )
                 .addFilterBefore(userAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
