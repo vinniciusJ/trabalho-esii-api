@@ -14,10 +14,9 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public boolean sendEventVerificationEmail(String url, String dstEmail) {
+    public boolean sendRegistrationVerificationEmail(String url, String dstEmail) {
         String link = "http://localhost:8080" + url;
 
-        // Corpo do e-mail com HTML
         String emailBody = """
         <html>
             <body>
@@ -32,8 +31,6 @@ public class EmailSenderService {
         """.formatted(link);
 
         try {
-            log.info("Enviando email!");
-
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
             helper.setTo(dstEmail);

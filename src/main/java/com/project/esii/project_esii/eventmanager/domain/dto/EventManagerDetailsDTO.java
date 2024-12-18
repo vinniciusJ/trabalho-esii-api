@@ -20,9 +20,6 @@ public record EventManagerDetailsDTO(
         @NotBlank
         String email,
 
-        @NotBlank
-        String password,
-
         @NotNull
         boolean isEmailVerified,
 

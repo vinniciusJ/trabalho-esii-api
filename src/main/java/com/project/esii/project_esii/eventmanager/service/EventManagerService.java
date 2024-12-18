@@ -6,7 +6,6 @@ import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.mapper.EventManagerMapper;
 import com.project.esii.project_esii.eventmanager.repository.EventManagerRepository;
 import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.security.SecurityConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -53,5 +52,9 @@ public class EventManagerService {
 
     public EventManager findByEmail(String email) {
         return eventManagerRepository.findByEmail(email);
+    }
+
+    public boolean existsByEmail(String email) {
+        return eventManagerRepository.existsByEmail(email);
     }
 }

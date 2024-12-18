@@ -44,8 +44,7 @@ public class SecurityConfiguration {
             // Event Manager
             "/event-manager",
             "/event-manager/verify-email/{id}",
-            "/event-manager/{id}",
-
+            "/event-manager/{id}"
     };
 
     public static final String[] ENDPOINTS_WITH_AUTHENTICATION_REQUIRED = {

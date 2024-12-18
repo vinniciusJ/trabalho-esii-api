@@ -21,9 +21,6 @@ public record EventParticipantDetailsDTO(
         @NotBlank
         String email,
 
-        @NotBlank
-        String password,
-
         @NotNull
         boolean isEmailVerified,
 

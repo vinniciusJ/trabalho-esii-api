@@ -21,11 +21,11 @@ public interface MainEventActionMapper {
     @Mapping(target = "id", ignore = true)
     MainEventAction convertMainEventActionFormDTOToMainEventAction(MainEventActionFormDTO mainEventActionFormDTO, MainEvent mainEvent, EventManager eventManager);
 
-    @Mapping(source = "mainEventAction.mainEvent", target = "mainEventDetailsDTO")
+    @Mapping(source = "mainEventAction.mainEvent", target = "mainEventDTO")
     @Mapping(source = "mainEventAction.eventManager", target = "eventManagerDetailsDTO")
     @Mapping(source = "mainEventAction.eventManager.cpf.cpfNumber", target = "eventManagerDetailsDTO.cpfNumber")
-    @Mapping(source = "mainEventAction.mainEvent.mainEventType", target = "mainEventDetailsDTO.mainEventTypeDetailsDTO")
-    @Mapping(source = "mainEventAction.mainEvent.eventManager", target = "mainEventDetailsDTO.eventManagerDetailsDTO")
-    @Mapping(source = "mainEventAction.mainEvent.eventManager.cpf.cpfNumber", target = "mainEventDetailsDTO.eventManagerDetailsDTO.cpfNumber")
+    @Mapping(source = "mainEventAction.mainEvent.mainEventType", target = "mainEventDTO.mainEventTypeDetailsDTO")
+    @Mapping(source = "mainEventAction.mainEvent.eventManager", target = "mainEventDTO.eventManagerDetailsDTO")
+    @Mapping(source = "mainEventAction.mainEvent.eventManager.cpf.cpfNumber", target = "mainEventDTO.eventManagerDetailsDTO.cpfNumber")
     MainEventActionDetailsDTO convertMainEventActionToMainEventActionDetailsDTO(MainEventAction mainEventAction);
 }

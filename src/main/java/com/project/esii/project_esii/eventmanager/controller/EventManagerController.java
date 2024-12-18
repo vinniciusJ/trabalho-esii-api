@@ -5,6 +5,8 @@ import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetails
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
+import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
+import com.project.esii.project_esii.excpetions.type.ExistingRegistrationEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,12 +19,15 @@ public class EventManagerController {
 
     private final EventManagerService eventManagerService;
     private final EmailSenderService emailSenderService;
+    private final EventParticipantService eventParticipantService;
 
     @PostMapping
     public ResponseEntity<EventManagerDetailsDTO> create(@RequestBody EventManagerFormDTO eventManagerFormDTO) {
+        if(eventParticipantService.existsByEmail(eventManagerFormDTO.email())) throw new ExistingRegistrationEmailException("Participante de Evento", eventManagerFormDTO.email());
+
         EventManager eventManager = eventManagerService.save(eventManagerFormDTO);
 
-        emailSenderService.sendEventVerificationEmail("/event-manager/verify-email/" + eventManager.getId(), eventManager.getEmail());
+        emailSenderService.sendRegistrationVerificationEmail("/event-manager/verify-email/" + eventManager.getId(), eventManager.getEmail());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventManagerService.convertEventManagerToEventManagerDetailsDTO(eventManager));
     }

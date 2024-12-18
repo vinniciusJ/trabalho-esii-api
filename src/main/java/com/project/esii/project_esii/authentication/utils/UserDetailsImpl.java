@@ -42,7 +42,7 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     public String getEmail() {
-        return baseUser.getName();
+        return baseUser.getEmail();
     }
 
     public String getPersonRole() {return baseUser.getPersonRole().toString();}

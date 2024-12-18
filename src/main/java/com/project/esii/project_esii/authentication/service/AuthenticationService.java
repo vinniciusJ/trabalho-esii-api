@@ -16,28 +16,6 @@ public class AuthenticationService {
     private final AuthenticationManager authenticationManager;
     private final JwtTokenService jwtTokenService;
 
-
-
-//    public BaseUser authenticate(String email, String password) {
-//        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
-//                new UsernamePasswordAuthenticationToken(email, password);
-//
-//        Authentication authentication = authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//
-////        BaseUser user = eventManagerService.findByEmail(email);
-////        if (user == null) {
-////            user = eventParticipantService.findByEmail(email);
-////        }
-////
-////        if (user != null && user.getPassword().equals(password)) {
-////            return user;
-////        }
-////
-////        throw new UsernameNotFoundException("User not found or password incorrect");
-//        return userDetails;
-//    }
-
     public RecoveryJwtTokenDto authenticate(String email, String password) {
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 

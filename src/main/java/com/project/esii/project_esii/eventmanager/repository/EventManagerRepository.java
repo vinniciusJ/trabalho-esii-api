@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface EventManagerRepository extends JpaRepository<EventManager, Long> {
     EventManager findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

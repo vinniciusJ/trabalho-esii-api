@@ -57,4 +57,8 @@ public class EventParticipantService {
     public EventParticipant findByEmail(String email) {
         return eventParticipantRepository.findByEmail(email);
     }
+
+    public boolean existsByEmail(String email) {
+        return eventParticipantRepository.existsByEmail(email);
+    }
 }
