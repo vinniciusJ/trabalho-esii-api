@@ -1,7 +1,7 @@
 package com.project.esii.project_esii.person.domain.entity;
 
+import com.project.esii.project_esii.enums.PersonRole;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -31,4 +31,8 @@ public abstract class Person {
     @NotNull
     @Column(nullable = false)
     private Boolean isEmailVerified = false;
+
+    @NotNull
+    @Column(nullable = false)
+    private PersonRole personRole;
 }

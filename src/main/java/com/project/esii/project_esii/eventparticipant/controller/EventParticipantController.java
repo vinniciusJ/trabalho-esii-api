@@ -22,7 +22,7 @@ public class EventParticipantController {
     public ResponseEntity<EventParticipantDetailsDTO> create(@RequestBody EventParticipantFormDTO eventParticipantFormDTO) {
         EventParticipant eventParticipant = eventParticipantService.save(eventParticipantFormDTO);
 
-        emailSenderService.sendEventParticipantVerificationEmail(eventParticipant.getEmail(), eventParticipant.getId());
+        emailSenderService.sendEventVerificationEmail("/event-participant/verify-email/" + eventParticipant.getId(), eventParticipant.getEmail());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventParticipantService.convertEventParticipantToEventParticipantDetailsDTO(eventParticipant));
     }

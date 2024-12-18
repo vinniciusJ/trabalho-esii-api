@@ -40,9 +40,9 @@ public class UserService {
         return userRepository.save(newUser);
     }
 
-    public boolean sendVerificationEmail(Long id, String email) {
-        return emailSenderService.sendEventParticipantVerificationEmail(email, id);
-    }
+//    public boolean sendVerificationEmail(Long id, String email) {
+//        return emailSenderService.sendEventVerificationEmail(email, id);
+//    }
 
 
     public User getByIdOrNull(Long id) {

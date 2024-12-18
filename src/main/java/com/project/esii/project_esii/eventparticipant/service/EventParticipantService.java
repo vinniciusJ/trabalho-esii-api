@@ -40,6 +40,7 @@ public class EventParticipantService {
 
     public EventParticipantDetailsDTO setEmailToVerified(EventParticipant eventParticipant) {
         eventParticipant.setIsEmailVerified(true);
+        eventParticipantRepository.save(eventParticipant);
         return convertEventParticipantToEventParticipantDetailsDTO(eventParticipant);
     }
 

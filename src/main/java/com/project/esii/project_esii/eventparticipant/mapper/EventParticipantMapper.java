@@ -10,8 +10,10 @@ import org.mapstruct.Mapping;
 public interface EventParticipantMapper {
 
     @Mapping(source = "eventParticipantFormDTO.cpfNumber", target = "cpf.cpfNumber")
+    @Mapping(source = "eventParticipantFormDTO.personRole", target = "personRole")
     EventParticipant convertEventParticipantFormDTOToEventParticipant(EventParticipantFormDTO eventParticipantFormDTO);
 
     @Mapping(source = "eventParticipant.cpf.cpfNumber", target = "cpfNumber")
+    @Mapping(source = "eventParticipant.personRole", target = "personRole")
     EventParticipantDetailsDTO convertEventParticipantToEventParticipantDetailsDTO(EventParticipant eventParticipant);
 }
