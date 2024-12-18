@@ -1,5 +1,5 @@
 package com.project.esii.project_esii.enums;
 
 public enum PersonRole {
-    ADMIN, EVENT_PARTICIPANT, EVENT_MANAGER
+    ROLE_ADMIN, ROLE_EVENT_PARTICIPANT, ROLE_EVENT_MANAGER
 }

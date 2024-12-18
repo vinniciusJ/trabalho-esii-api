@@ -1,5 +1,6 @@
 package com.project.esii.project_esii.eventmanager.service;
 
+import com.project.esii.project_esii.authentication.domain.entity.BaseUser;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
@@ -44,5 +45,9 @@ public class EventManagerService {
 
     public void delete(EventManager eventManager) {
         eventManagerRepository.delete(eventManager);
+    }
+
+    public EventManager findByEmail(String email) {
+        return eventManagerRepository.findByEmail(email);
     }
 }

@@ -1,5 +1,6 @@
 package com.project.esii.project_esii.eventparticipant.service;
 
+import com.project.esii.project_esii.authentication.domain.entity.BaseUser;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDetailsDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
@@ -46,5 +47,9 @@ public class EventParticipantService {
 
     public void delete(EventParticipant eventParticipant) {
         eventParticipantRepository.delete(eventParticipant);
+    }
+
+    public EventParticipant findByEmail(String email) {
+        return eventParticipantRepository.findByEmail(email);
     }
 }
