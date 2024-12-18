@@ -41,7 +41,7 @@ public class UserService {
     }
 
     public boolean sendVerificationEmail(Long id, String email) {
-        return emailSenderService.sendVerificationEmail(email, id);
+        return emailSenderService.sendEventParticipantVerificationEmail(email, id);
     }
 
 

@@ -14,8 +14,8 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public boolean sendVerificationEmail(String dstEmail, Long userId) {
-        String link = "http://localhost:8080/user/verify-email/" + userId;
+    public boolean sendEventParticipantVerificationEmail(String dstEmail, Long userId) {
+        String link = "http://localhost:8080/event-participant/verify-email/" + userId;
 
         // Corpo do e-mail com HTML
         String emailBody = """
