@@ -43,7 +43,7 @@ public class EventParticipantController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUserById(@PathVariable Long id) {
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
         EventParticipant eventParticipant = eventParticipantService.findById(id);
         eventParticipantService.delete(eventParticipant);
 

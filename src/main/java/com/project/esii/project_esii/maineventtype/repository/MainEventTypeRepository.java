@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.maineventtype.domain.repository;
+package com.project.esii.project_esii.maineventtype.repository;
 
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -7,7 +7,7 @@ import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
-import com.project.esii.project_esii.maineventtype.domain.service.MainEventTypeService;
+import com.project.esii.project_esii.maineventtype.service.MainEventTypeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

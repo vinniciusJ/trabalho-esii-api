@@ -19,18 +19,18 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping
-    public ResponseEntity<UserDetailsDTO> create(@RequestBody UserFormDTO userFormDTO) {
-        User user = userService.create(userFormDTO);
-
-        boolean emailSent = userService.sendVerificationEmail(user.getId(), user.getEmail());
-        if (!emailSent) {
-            userService.delete(user.getId());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.convertEntityToUserDetailsDTO(user));
-    }
+//    @PostMapping
+//    public ResponseEntity<UserDetailsDTO> create(@RequestBody UserFormDTO userFormDTO) {
+//        User user = userService.create(userFormDTO);
+//
+//        boolean emailSent = userService.sendVerificationEmail(user.getId(), user.getEmail());
+//        if (!emailSent) {
+//            userService.delete(user.getId());
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+//        }
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(UserMapper.convertEntityToUserDetailsDTO(user));
+//    }
 
     @PostMapping("/verify-email/{id}")
     public ResponseEntity<String> verifyEmail(@PathVariable Long id) {
