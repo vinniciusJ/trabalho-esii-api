@@ -28,9 +28,12 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         EventParticipant eventParticipant = eventParticipantService.findByEmail(email);
         if (eventParticipant != null) {
+            if(!eventParticipant.getIsEmailVerified()) {
+                return null;
+            }
             return new UserDetailsImpl(eventParticipant);
         }
 
-        throw new UsernameNotFoundException("User not found with email: " + email);
+        return null;
     }
 }
