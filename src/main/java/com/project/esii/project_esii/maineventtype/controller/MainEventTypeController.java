@@ -31,14 +31,14 @@ public class MainEventTypeController {
     public ResponseEntity<List<MainEventTypeDetailsDTO>> listAll() {
         List<MainEventType> mainEventTypeList = mainEventTypeService.findAll();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertToMainEventTypeDetailsDTOList(mainEventTypeList));
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventTypeService.convertToMainEventTypeDetailsDTOList(mainEventTypeList));
     }
 
     @GetMapping
     public ResponseEntity<Page<MainEventTypeDetailsDTO>> list(Pageable pageable) {
         Page<MainEventType> mainEventTypePage = mainEventTypeService.findAll(pageable);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventTypeService.convertToMainEventTypeDetailsDTOPage(mainEventTypePage));
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventTypeService.convertToMainEventTypeDetailsDTOPage(mainEventTypePage));
     }
 
     @GetMapping("/{id}")

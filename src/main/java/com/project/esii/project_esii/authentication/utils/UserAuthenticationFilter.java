@@ -4,7 +4,6 @@ import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
 import com.project.esii.project_esii.security.JwtTokenService;
 import com.project.esii.project_esii.security.SecurityConfiguration;
 import jakarta.servlet.FilterChain;
