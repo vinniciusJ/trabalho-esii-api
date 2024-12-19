@@ -27,7 +27,7 @@ public class MainEventController {
     @PostMapping
     public ResponseEntity<MainEventDetailsDTO> create(@RequestBody MainEventFormDTO mainEventFormDTO) {
         MainEventType mainEventType = mainEventTypeService.findById(mainEventFormDTO.mainEventTypeId());
-        EventManager eventManager = eventManagerService.findById(mainEventFormDTO.eventManagerId());
+        EventManager eventManager = eventManagerService.findByCpfNumber(mainEventFormDTO.eventManagerCpfNumber());
 
         MainEvent mainEvent = mainEventService.save(mainEventFormDTO, eventManager, mainEventType);
 

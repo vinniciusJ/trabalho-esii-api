@@ -60,4 +60,10 @@ public class EventManagerService {
     public boolean existsByEmail(String email) {
         return eventManagerRepository.existsByEmail(email);
     }
+
+    public EventManager findByCpfNumber(String cpfNumber) {
+        EventManager eventManager = eventManagerRepository.findByCpfNumber(cpfNumber);
+        if(eventManager == null) throw new EntityNotFoundExcpetion("EventManager", "cpfNumber", cpfNumber);
+        return eventManager;
+    }
 }

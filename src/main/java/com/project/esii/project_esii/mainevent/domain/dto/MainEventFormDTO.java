@@ -25,7 +25,7 @@ public record MainEventFormDTO(
         String address,
 
         @NotNull
-        Long eventManagerId,
+        String eventManagerCpfNumber,
 
         @NotNull
         Long mainEventTypeId
