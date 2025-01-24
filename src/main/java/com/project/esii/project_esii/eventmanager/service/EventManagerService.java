@@ -27,7 +27,7 @@ public class EventManagerService {
     public EventManager save(EventManagerFormDTO eventManagerFormDTO) {
         EventManager eventManager = convertEventManagerFormDTOToEventManager(eventManagerFormDTO);
 
-        eventManager.setPersonRole(PersonRole.ROLE_EVENT_MANAGER);
+        eventManager.setPersonRole(eventManagerFormDTO.personRole());
 
         String encodedPassword = new BCryptPasswordEncoder().encode(eventManager.getPassword());
         eventManager.setPassword(encodedPassword);

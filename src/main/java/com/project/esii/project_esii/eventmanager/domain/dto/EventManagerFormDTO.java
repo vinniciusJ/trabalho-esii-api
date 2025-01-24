@@ -22,6 +22,9 @@ public record EventManagerFormDTO(
         String password,
 
         @NotNull
+        PersonRole personRole,
+
+        @NotNull
         boolean isEmailVerified
 ) {
 }

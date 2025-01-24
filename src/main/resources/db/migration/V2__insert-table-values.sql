@@ -1,7 +1,6 @@
 -- Inserir dados na tabela event_manager
 INSERT INTO event_manager (is_email_verified, person_role, cpf_number, email, name, password, phone)
 VALUES
-    (true, 0, '12345677901', 'admin', 'admin', '$2a$10$T5NvB0eRgaLY8iI/jMNO6urUVZWk1V8M1VsfBhX3lkhTDAuxQfFOe', '555-1234'), -- Senha: password123
     (true, 1, '12345678901', 'manager1@example.com', 'Manager One', '$2a$10$eImiTXuWVxfM37uY4JANjQe6.6nP3HtT4YRWHL8e60PHjlk7p8nZe', '555-1234'), -- Senha: password123
     (true, 1, '98765432100', 'manager2@example.com', 'Manager Two', '$2a$10$7QyzU5tG3.SBtS2W0Cm.dOV6/38CFA.I0PiD1.w3gAPEN8v7AsRxC', '555-5678'), -- Senha: admin2024
     (true, 1, '11223344556', 'manager3@example.com', 'Manager Three', '$2a$10$8fF8j6VkOeA7fWbPL3Oixu9WB.Z0OuqEPjdgF5ZOWdBodShI6aKyK', '555-9999'); -- Senha: securepass
