@@ -1,8 +1,8 @@
-package com.project.esii.project_esii.excpetions.controller;
+package com.project.esii.project_esii.exceptions.controller;
 
-import com.project.esii.project_esii.excpetions.config.ErrorDescription;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.excpetions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.exceptions.config.ErrorDescription;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
 import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

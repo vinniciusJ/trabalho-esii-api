@@ -1,7 +1,7 @@
 package com.project.esii.project_esii.mainevent.service;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
