@@ -14,7 +14,7 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public boolean sendRegistrationVerificationEmail(String url, String dstEmail) {
+    public void sendRegistrationVerificationEmail(String url, String dstEmail) {
         String link = "http://localhost:8080" + url;
 
         String emailBody = """
@@ -38,9 +38,9 @@ public class EmailSenderService {
             helper.setText(emailBody, true);
 
             javaMailSender.send(mimeMessage);
-            return true;
+            log.info("Email sent!");
         } catch (Exception e) {
-            return false;
+            log.info("Email not sent! {}", e.getMessage());
         }
     }
 }
