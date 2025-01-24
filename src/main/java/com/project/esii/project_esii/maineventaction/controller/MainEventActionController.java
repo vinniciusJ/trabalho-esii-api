@@ -51,14 +51,14 @@ public class MainEventActionController {
            mainEventActionPage = mainEventActionService.findAll(pageable);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventActionService.convertToMainEventActionDetailsDTOPage(mainEventActionPage));
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventActionService.convertToMainEventActionDetailsDTOPage(mainEventActionPage));
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<MainEventActionDetailsDTO> findById(@PathVariable Long id) {
         MainEventAction mainEventAction = mainEventActionService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventActionService.convertMainEventActionToMainEventActionDetailsDTO(mainEventAction));
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventActionService.convertMainEventActionToMainEventActionDetailsDTO(mainEventAction));
     }
 
     @DeleteMapping("/{id}")
