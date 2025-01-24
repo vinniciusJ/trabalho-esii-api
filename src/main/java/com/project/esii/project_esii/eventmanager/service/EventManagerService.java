@@ -10,9 +10,11 @@ import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class EventManagerService {
 
     private final EventManagerRepository eventManagerRepository;

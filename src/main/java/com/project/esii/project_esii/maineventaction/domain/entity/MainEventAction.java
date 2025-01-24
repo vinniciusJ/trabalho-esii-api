@@ -20,11 +20,11 @@ public class MainEventAction extends Activity {
     @Column(nullable = false)
     private Integer quantityVacancies;
 
-    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EventParticipant> participants;
+    @OneToMany(mappedBy = "mainEventAction", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EventParticipant> participants;  // Relacionamento com participantes
 
     @NotNull
     @ManyToOne
     @JoinColumn(name = "main_event_id", nullable = false)
-    private MainEvent mainEvent;
+    private MainEvent mainEvent;  // Relacionamento com MainEvent
 }

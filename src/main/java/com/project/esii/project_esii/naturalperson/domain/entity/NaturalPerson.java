@@ -7,11 +7,11 @@ import jakarta.persistence.MappedSuperclass;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
-@Data
-@MappedSuperclass
-@EqualsAndHashCode(callSuper = true)
-public class NaturalPerson extends Person {
+    @Data
+    @MappedSuperclass
+    @EqualsAndHashCode(callSuper = true)
+    public class NaturalPerson extends Person {
 
-    @Embedded
-    private Cpf cpf;
-}
+        @Embedded
+        private Cpf cpf;
+    }

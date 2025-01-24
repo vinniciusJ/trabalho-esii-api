@@ -10,6 +10,7 @@ import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionD
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventaction.service.MainEventActionService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/main-event/{eventId}/action")
 @RequiredArgsConstructor
+@Transactional
 public class MainEventActionController {
 
     private final MainEventActionService mainEventActionService;

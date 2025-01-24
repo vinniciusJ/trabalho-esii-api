@@ -10,6 +10,7 @@ import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import com.project.esii.project_esii.maineventtype.service.MainEventTypeService;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/main-event")
 @RequiredArgsConstructor
+@Transactional
 public class MainEventController {
 
     private final MainEventService mainEventService;

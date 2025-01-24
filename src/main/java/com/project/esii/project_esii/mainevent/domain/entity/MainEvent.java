@@ -23,6 +23,6 @@ public class MainEvent extends Activity {
     @OneToMany(mappedBy = "mainEvent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainEventAction> mainEventActionList;
 
-    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EventParticipant> participants;
+    @OneToMany(mappedBy = "mainEvent", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EventParticipant> participants;  // Relacionamento com participantes
 }
