@@ -51,4 +51,22 @@ public class MainEventService {
     public void delete(MainEvent mainEvent) {
         mainEventRepository.delete(mainEvent);
     }
+
+    public MainEventDetailsDTO update(MainEvent mainEvent, EventManager eventManager, MainEventType mainEventType, MainEventFormDTO mainEventFormDTO) {
+        MainEvent updatedMainEvent = convertMainEventFormDTOToMainEvent(mainEventFormDTO, eventManager, mainEventType);
+        updatedMainEvent.setId(mainEvent.getId());
+
+        mainEventRepository.save(updatedMainEvent);
+
+        return convertMainEventToMainEventDetailsDTO(updatedMainEvent);
+    }
+
+    public Page<MainEvent> findAllByEventManager(EventManager eventManager, Pageable pageable) {
+        return mainEventRepository.findAllByEventManager(eventManager, pageable);
+    }
+
+    public MainEvent getOrNull(Long id) {
+        if(id == null) return null;
+        return mainEventRepository.findById(id).orElse(null);
+    }
 }

@@ -34,9 +34,30 @@ public class MainEventController {
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventService.convertMainEventToMainEventDetailsDTO(mainEvent));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MainEventDetailsDTO> update(@PathVariable Long id, @RequestBody MainEventFormDTO mainEventFormDTO) {
+        MainEvent mainEvent = mainEventService.findById(id);
+        MainEventType mainEventType = mainEventTypeService.findById(mainEventFormDTO.mainEventTypeId());
+        EventManager eventManager = eventManagerService.findByCpfNumber(mainEventFormDTO.eventManagerCpfNumber());
+
+        if(!eventManager.getCpfNumber().equals(mainEvent.getEventManager().getCpfNumber())) {
+            throw new com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException("MainEvent", "cpfNumber", eventManager.getCpfNumber());
+        }
+
+
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventService.update(mainEvent, eventManager, mainEventType, mainEventFormDTO));
+    }
+
     @GetMapping
-    public ResponseEntity<Page<MainEventDetailsDTO>> list(Pageable pageable) {
-        Page<MainEvent> mainEventPage = mainEventService.findAll(pageable);
+    public ResponseEntity<Page<MainEventDetailsDTO>> list(Pageable pageable, Long eventManagerId) {
+        EventManager eventManager = eventManagerService.getOrNull(eventManagerId);
+        Page<MainEvent> mainEventPage;
+
+        if(eventManager != null) {
+            mainEventPage = mainEventService.findAllByEventManager(eventManager, pageable);
+        } else {
+            mainEventPage = mainEventService.findAll(pageable);
+        }
 
         return ResponseEntity.ok(mainEventService.convertToMainEventDetailsDTOPage(mainEventPage));
     }
