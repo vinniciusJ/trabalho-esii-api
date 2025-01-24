@@ -13,6 +13,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
+
 @Service
 @RequiredArgsConstructor
 public class MainEventService {
@@ -50,5 +52,14 @@ public class MainEventService {
 
     public void delete(MainEvent mainEvent) {
         mainEventRepository.delete(mainEvent);
+    }
+
+    public MainEventDetailsDTO update(MainEvent mainEvent, EventManager eventManager, MainEventType mainEventType, MainEventFormDTO mainEventFormDTO) {
+        MainEvent updatedMainEvent = convertMainEventFormDTOToMainEvent(mainEventFormDTO, eventManager, mainEventType);
+        updatedMainEvent.setId(mainEvent.getId());
+
+        mainEventRepository.save(updatedMainEvent);
+
+        return convertMainEventToMainEventDetailsDTO(updatedMainEvent);
     }
 }

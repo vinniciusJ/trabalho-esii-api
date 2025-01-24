@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -59,5 +60,13 @@ public class MainEventTypeService {
 
     public List<MainEventTypeDetailsDTO> convertToMainEventTypeDetailsDTOList(List<MainEventType> mainEventTypeList) {
         return mainEventTypeList.stream().map(mainEventTypeMapper::convertMainEventTypeToMainEventTypeDetailsDTO).collect(Collectors.toList());
+    }
+
+    public MainEventTypeDetailsDTO update(MainEventType mainEventType, MainEventTypeFormDTO mainEventTypeFormDTO) {
+        MainEventType updatedMainEventType = convertMainEventTypeFormDTOToMainEventType(mainEventTypeFormDTO);
+        updatedMainEventType.setId(mainEventType.getId());
+
+        mainEventTypeRepository.save(updatedMainEventType);
+        return convertMainEventTypeToMainEventTypeDetailsDTO(updatedMainEventType);
     }
 }

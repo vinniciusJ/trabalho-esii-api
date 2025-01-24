@@ -2,6 +2,7 @@ package com.project.esii.project_esii.mainevent.controller;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
+import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
@@ -32,6 +33,20 @@ public class MainEventController {
         MainEvent mainEvent = mainEventService.save(mainEventFormDTO, eventManager, mainEventType);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventService.convertMainEventToMainEventDetailsDTO(mainEvent));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MainEventDetailsDTO> update(@PathVariable Long id, @RequestBody MainEventFormDTO mainEventFormDTO) {
+        MainEvent mainEvent = mainEventService.findById(id);
+        MainEventType mainEventType = mainEventTypeService.findById(mainEventFormDTO.mainEventTypeId());
+        EventManager eventManager = eventManagerService.findByCpfNumber(mainEventFormDTO.eventManagerCpfNumber());
+
+        if(!eventManager.getCpfNumber().equals(mainEvent.getEventManager().getCpfNumber())) {
+            throw new NotAllowedToUpdateException("MainEvent", "cpfNumber", eventManager.getCpfNumber());
+        }
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventService.update(mainEvent, eventManager, mainEventType, mainEventFormDTO));
     }
 
     @GetMapping
