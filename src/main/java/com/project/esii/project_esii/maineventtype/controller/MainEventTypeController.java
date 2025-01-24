@@ -41,6 +41,13 @@ public class MainEventTypeController {
         return ResponseEntity.status(HttpStatus.OK).body(mainEventTypeService.convertToMainEventTypeDetailsDTOPage(mainEventTypePage));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<MainEventTypeDetailsDTO> update(@PathVariable Long id, @RequestBody MainEventTypeFormDTO mainEventTypeFormDTO) {
+        MainEventType mainEventType = mainEventTypeService.findById(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(mainEventTypeService.update(mainEventType, mainEventTypeFormDTO));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<MainEventTypeDetailsDTO> findById(@PathVariable Long id) {
         MainEventType mainEventType = mainEventTypeService.findById(id);

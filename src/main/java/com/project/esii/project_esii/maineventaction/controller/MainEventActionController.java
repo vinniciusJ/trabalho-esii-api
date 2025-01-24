@@ -40,8 +40,16 @@ public class MainEventActionController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MainEventActionDetailsDTO>> list(Pageable pageable) {
-        Page<MainEventAction> mainEventActionPage = mainEventActionService.findAll(pageable);
+    public ResponseEntity<Page<MainEventActionDetailsDTO>> list(Pageable pageable, Long eventId) {
+        MainEvent mainEvent = mainEventService.getOrNull(eventId);
+
+        Page<MainEventAction> mainEventActionPage;
+
+        if(mainEvent != null) {
+            mainEventActionPage = mainEventActionService.findAllByMainEvent(mainEvent, pageable);
+        } else {
+           mainEventActionPage = mainEventActionService.findAll(pageable);
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(mainEventActionService.convertToMainEventActionDetailsDTOPage(mainEventActionPage));
     }

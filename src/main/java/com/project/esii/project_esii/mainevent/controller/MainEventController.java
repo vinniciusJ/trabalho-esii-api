@@ -2,15 +2,12 @@ package com.project.esii.project_esii.mainevent.controller;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
-import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
-import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import com.project.esii.project_esii.maineventtype.service.MainEventTypeService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,13 +18,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/main-event")
 @RequiredArgsConstructor
-@Transactional
 public class MainEventController {
 
     private final MainEventService mainEventService;
     private final MainEventTypeService mainEventTypeService;
     private final EventManagerService eventManagerService;
-    private final EventParticipantService eventParticipantService;
 
     @PostMapping
     public ResponseEntity<MainEventDetailsDTO> create(@RequestBody MainEventFormDTO mainEventFormDTO) {
@@ -57,15 +52,6 @@ public class MainEventController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         MainEvent mainEvent = mainEventService.findById(id);
         mainEventService.delete(mainEvent);
-
-        return ResponseEntity.noContent().build();
-    }
-
-    @PatchMapping("/{id}/participant")
-    public ResponseEntity<Void> registerParticipant(@PathVariable Long id, @RequestBody Long participantId){
-        EventParticipant eventParticipant = eventParticipantService.findById(id);
-
-        mainEventService.subscribeParticipant(id, eventParticipant);
 
         return ResponseEntity.noContent().build();
     }

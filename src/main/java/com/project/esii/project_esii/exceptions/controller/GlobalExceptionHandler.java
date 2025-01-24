@@ -1,8 +1,9 @@
-package com.project.esii.project_esii.exceptions.controller;
+package com.project.esii.project_esii.excpetions.controller;
 
-import com.project.esii.project_esii.exceptions.config.ErrorDescription;
-import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.excpetions.config.ErrorDescription;
+import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.excpetions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +15,17 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundExcpetion.class)
     public ResponseEntity<ErrorDescription> handleEntityNotFoundException(EntityNotFoundExcpetion ex) {
         String message = ex.getEntity() + " não encontrado(a) para " + ex.getField() + " " + ex.getValue();
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(NotAllowedToUpdateException.class)
+    public ResponseEntity<ErrorDescription> handleNotAllowedToUpdateException(NotAllowedToUpdateException ex) {
+        String message = "Usuário não possui permissão para atualizar entidade " + ex.getEntity() + ", com " + ex.getField() +
+                " " + ex.getValue();
         ErrorDescription errorResponse = new ErrorDescription(
                 HttpStatus.NOT_FOUND.value(),
                 message
