@@ -44,22 +44,22 @@ public class MainEventActionService {
     }
 
 
-    public void subscribeParticipant(Long id, EventParticipant eventParticipant, MainEvent event) {
-        MainEventAction action = findById(id);
-
-        if(!event.getMainEventActionList().contains(action)){
-            throw new RuntimeException("Ação " + action.getTitle() + " não existe para o evento " + event.getTitle());
-        }
-
-        if(action.getParticipants().size() + 1 > action.getQuantityVacancies()){
-            throw new RuntimeException("Limites de vagas excedido para a ação " + action.getTitle() + " no evento " + action.getMainEvent().getTitle());
-        }
-
-        action.getParticipants().add(eventParticipant);
-        action.setQuantityVacancies(action.getQuantityVacancies() + 1);
-
-        mainEventActionRepository.save(action);
-    }
+//    public void subscribeParticipant(Long id, EventParticipant eventParticipant, MainEvent event) {
+//        MainEventAction action = findById(id);
+//
+//        if(!event.getMainEventActionList().contains(action)){
+//            throw new RuntimeException("Ação " + action.getTitle() + " não existe para o evento " + event.getTitle());
+//        }
+//
+//        if(action.getParticipants().size() + 1 > action.getQuantityVacancies()){
+//            throw new RuntimeException("Limites de vagas excedido para a ação " + action.getTitle() + " no evento " + action.getMainEvent().getTitle());
+//        }
+//
+//        action.getParticipants().add(eventParticipant);
+//        action.setQuantityVacancies(action.getQuantityVacancies() + 1);
+//
+//        mainEventActionRepository.save(action);
+//    }
 
     public MainEventAction findById(Long id) {
         return mainEventActionRepository.findById(id).orElseThrow(

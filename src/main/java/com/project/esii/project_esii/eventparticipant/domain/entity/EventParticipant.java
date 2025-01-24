@@ -14,14 +14,14 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class EventParticipant extends NaturalPerson implements BaseUser {
 
-    @NotNull
-    @ManyToOne
-    @JoinColumn(name = "main_event_id", nullable = false)
-    private MainEvent mainEvent;  // Relacionamento com MainEvent
-
-    @ManyToOne
-    @JoinColumn(name = "main_event_action_id", nullable = false)
-    private MainEventAction mainEventAction;  // Relacionamento com MainEventAction
+//    @NotNull
+//    @ManyToOne
+//    @JoinColumn(name = "main_event_id", nullable = false)
+//    private MainEvent mainEvent;  // Relacionamento com MainEvent
+//
+//    @ManyToOne
+//    @JoinColumn(name = "main_event_action_id", nullable = false)
+//    private MainEventAction mainEventAction;  // Relacionamento com MainEventAction
 
     @Override
     public String getCpfNumber() {

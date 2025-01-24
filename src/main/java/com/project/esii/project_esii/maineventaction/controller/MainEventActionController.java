@@ -19,7 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/main-event/{eventId}/action")
+@RequestMapping("/main-event-action")
 @RequiredArgsConstructor
 @Transactional
 public class MainEventActionController {
@@ -69,13 +69,13 @@ public class MainEventActionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/participant")
-    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long eventId, @PathVariable Long id, @RequestBody Long participantId) {
-        MainEvent event = mainEventService.findById(eventId);
-        EventParticipant eventParticipant = eventParticipantService.findById(id);
-
-        mainEventActionService.subscribeParticipant(id, eventParticipant, event);
-
-        return ResponseEntity.noContent().build();
-    }
+//    @PatchMapping("/{id}/participant")
+//    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long eventId, @PathVariable Long id, @RequestBody Long participantId) {
+//        MainEvent event = mainEventService.findById(eventId);
+//        EventParticipant eventParticipant = eventParticipantService.findById(id);
+//
+//        mainEventActionService.subscribeParticipant(id, eventParticipant, event);
+//
+//        return ResponseEntity.noContent().build();
+//    }
 }
