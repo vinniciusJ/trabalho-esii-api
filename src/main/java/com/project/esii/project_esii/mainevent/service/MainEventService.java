@@ -2,11 +2,13 @@ package com.project.esii.project_esii.mainevent.service;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.EventActionNotValidForEventException;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.mapper.MainEventMapper;
 import com.project.esii.project_esii.mainevent.repository.MainEventRepository;
+import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -68,5 +70,12 @@ public class MainEventService {
     public MainEvent getOrNull(Long id) {
         if(id == null) return null;
         return mainEventRepository.findById(id).orElse(null);
+    }
+
+    public void verifyIfHasMainEventAction(MainEvent mainEvent, MainEventAction mainEventAction) {
+        if(!mainEvent.getMainEventActionList().contains(mainEventAction)) {
+            throw new EventActionNotValidForEventException();
+        }
+
     }
 }

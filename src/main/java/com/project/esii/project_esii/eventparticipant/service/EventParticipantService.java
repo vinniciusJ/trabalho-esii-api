@@ -45,6 +45,12 @@ public class EventParticipantService {
         );
     }
 
+    public EventParticipant findByCpfNumber(String cpfNumber) {
+        return eventParticipantRepository.findByCpfCpfNumber(cpfNumber).orElseThrow(
+                () -> new EntityNotFoundExcpetion("EventParticipant", "cpfNumber", cpfNumber)
+        );
+    }
+
     public EventParticipantDetailsDTO setEmailToVerified(EventParticipant eventParticipant) {
         eventParticipant.setIsEmailVerified(true);
         eventParticipantRepository.save(eventParticipant);

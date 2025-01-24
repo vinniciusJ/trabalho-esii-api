@@ -2,6 +2,8 @@ package com.project.esii.project_esii.exceptions.controller;
 
 import com.project.esii.project_esii.exceptions.config.ErrorDescription;
 import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.EventActionNotValidForEventException;
+import com.project.esii.project_esii.exceptions.type.ExistingEventSubscriptionException;
 import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
 import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import org.springframework.http.HttpStatus;
@@ -15,6 +17,26 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(EntityNotFoundExcpetion.class)
     public ResponseEntity<ErrorDescription> handleEntityNotFoundException(EntityNotFoundExcpetion ex) {
         String message = ex.getEntity() + " não encontrado(a) para " + ex.getField() + " " + ex.getValue();
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(ExistingEventSubscriptionException.class)
+    public ResponseEntity<ErrorDescription> handleExistingEventSubscriptionException(ExistingEventSubscriptionException ex) {
+        String message = "Inscrição já existe para usuário nesse evento";
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(EventActionNotValidForEventException.class)
+    public ResponseEntity<ErrorDescription> handleEventActionNotValidForEventException(EventActionNotValidForEventException ex) {
+        String message = "O evento não possui a ação informada";
         ErrorDescription errorResponse = new ErrorDescription(
                 HttpStatus.NOT_FOUND.value(),
                 message
