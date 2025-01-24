@@ -123,11 +123,12 @@
 			<plugin>
 				<groupId>org.flywaydb</groupId>
 				<artifactId>flyway-maven-plugin</artifactId>
-				<version>8.5.13</version>
+				<version>10.17.3</version>
 				<configuration>
-					<url>jdbc:postgresql://localhost:5432/esii-events</url>
+					<url>jdbc:postgresql://localhost:5432/events</url>
 					<user>postgres</user>
 					<password>root</password>
+					<cleanDisabled>false</cleanDisabled>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -168,23 +169,6 @@
 							<version>1.6.2</version>
 						</path>
 					</annotationProcessorPaths>
-				</configuration>
-			</plugin>
-
-			<!-- Plugin do Flyway -->
-			<plugin>
-				<groupId>org.flywaydb</groupId>
-				<artifactId>flyway-maven-plugin</artifactId>
-				<version>11.1.0</version>
-				<configuration>
-					<url>jdbc:h2:mem:events;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
-					<user>sa</user>
-					<password></password>
-					<driver>org.h2.Driver</driver>
-					<schemas>
-						<schema>PUBLIC</schema>
-					</schemas>
-					<cleanDisabled>false</cleanDisabled> <!-- Adicione esta linha -->
 				</configuration>
 			</plugin>
 		</plugins>
