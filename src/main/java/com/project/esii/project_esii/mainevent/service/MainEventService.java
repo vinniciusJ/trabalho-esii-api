@@ -62,4 +62,13 @@ public class MainEventService {
 
         return convertMainEventToMainEventDetailsDTO(updatedMainEvent);
     }
+
+    public Page<MainEvent> findAllByEventManager(EventManager eventManager, Pageable pageable) {
+        return mainEventRepository.findAllByEventManager(eventManager, pageable);
+    }
+
+    public MainEvent getOrNull(Long id) {
+        if(id == null) return null;
+        return mainEventRepository.findById(id).orElse(null);
+    }
 }

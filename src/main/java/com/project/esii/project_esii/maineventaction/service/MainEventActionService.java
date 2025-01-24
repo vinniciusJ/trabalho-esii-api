@@ -51,4 +51,8 @@ public class MainEventActionService {
     public void delete(MainEventAction mainEventAction) {
         mainEventActionRepository.delete(mainEventAction);
     }
+
+    public Page<MainEventAction> findAllByMainEvent(MainEvent mainEvent, Pageable pageable) {
+        return mainEventActionRepository.findAllByMainEvent(mainEvent, pageable);
+    }
 }

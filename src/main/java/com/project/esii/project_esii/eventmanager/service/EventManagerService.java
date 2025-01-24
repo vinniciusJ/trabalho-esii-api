@@ -66,4 +66,9 @@ public class EventManagerService {
         if(eventManager == null) throw new EntityNotFoundExcpetion("EventManager", "cpfNumber", cpfNumber);
         return eventManager;
     }
+
+    public EventManager getOrNull(Long id) {
+        if(id == null) return null;
+        return eventManagerRepository.findById(id).orElse(null);
+    }
 }

@@ -50,8 +50,15 @@ public class MainEventController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MainEventDetailsDTO>> list(Pageable pageable) {
-        Page<MainEvent> mainEventPage = mainEventService.findAll(pageable);
+    public ResponseEntity<Page<MainEventDetailsDTO>> list(Pageable pageable, Long eventManagerId) {
+        EventManager eventManager = eventManagerService.getOrNull(eventManagerId);
+        Page<MainEvent> mainEventPage;
+
+        if(eventManager != null) {
+            mainEventPage = mainEventService.findAllByEventManager(eventManager, pageable);
+        } else {
+            mainEventPage = mainEventService.findAll(pageable);
+        }
 
         return ResponseEntity.ok(mainEventService.convertToMainEventDetailsDTOPage(mainEventPage));
     }
