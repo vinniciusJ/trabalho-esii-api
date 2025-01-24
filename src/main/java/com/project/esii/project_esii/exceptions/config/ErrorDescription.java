@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.excpetions.config;
+package com.project.esii.project_esii.exceptions.config;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

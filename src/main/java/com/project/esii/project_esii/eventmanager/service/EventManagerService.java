@@ -6,7 +6,7 @@ import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.mapper.EventManagerMapper;
 import com.project.esii.project_esii.eventmanager.repository.EventManagerRepository;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;

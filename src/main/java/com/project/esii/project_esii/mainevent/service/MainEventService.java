@@ -1,7 +1,8 @@
 package com.project.esii.project_esii.mainevent.service;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDetailsDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
@@ -12,6 +13,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -40,6 +44,26 @@ public class MainEventService {
 
     public Page<MainEventDetailsDTO> convertToMainEventDetailsDTOPage(Page<MainEvent> mainEventPage) {
         return mainEventPage.map(mainEventMapper::convertMainEventToMainEventDetailsDTO);
+    }
+
+    public void subscribeParticipant(Long id, EventParticipant eventParticipant){
+        MainEvent mainEvent = findById(id);
+
+        mainEvent.getParticipants().add(eventParticipant);
+        mainEventRepository.save(mainEvent);
+    }
+
+    public boolean isParticipantSubscribed(Long id, EventParticipant eventParticipant){
+        MainEvent mainEvent = findById(id);
+        List<EventParticipant> participants = mainEvent.getParticipants();
+
+        EventParticipant participant = participants
+                                            .stream()
+                                            .filter(p -> Objects.equals(p.getId(), eventParticipant.getId()))
+                                            .findFirst()
+                                            .orElse(null);
+
+        return participant != null;
     }
 
     public MainEvent findById(Long id) {

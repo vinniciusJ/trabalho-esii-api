@@ -1,6 +1,7 @@
 package com.project.esii.project_esii.mainevent.domain.entity;
 
 import com.project.esii.project_esii.activity.domain.entity.Activity;
+import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import jakarta.persistence.*;
@@ -21,4 +22,7 @@ public class MainEvent extends Activity {
 
     @OneToMany(mappedBy = "mainEvent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainEventAction> mainEventActionList;
+
+    @OneToMany(mappedBy = "participant", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<EventParticipant> participants;
 }

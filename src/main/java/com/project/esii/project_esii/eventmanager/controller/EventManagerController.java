@@ -6,7 +6,7 @@ import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
-import com.project.esii.project_esii.excpetions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

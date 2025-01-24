@@ -1,7 +1,8 @@
 package com.project.esii.project_esii.maineventaction.service;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDetailsDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
@@ -40,6 +41,24 @@ public class MainEventActionService {
 
     public Page<MainEventActionDetailsDTO> convertToMainEventActionDetailsDTOPage(Page<MainEventAction> mainEventActionPage) {
         return mainEventActionPage.map(this::convertMainEventActionToMainEventActionDetailsDTO);
+    }
+
+
+    public void subscribeParticipant(Long id, EventParticipant eventParticipant, MainEvent event) {
+        MainEventAction action = findById(id);
+
+        if(!event.getMainEventActionList().contains(action)){
+            throw new RuntimeException("Ação " + action.getTitle() + " não existe para o evento " + event.getTitle());
+        }
+
+        if(action.getParticipants().size() + 1 > action.getQuantityVacancies()){
+            throw new RuntimeException("Limites de vagas excedido para a ação " + action.getTitle() + " no evento " + action.getMainEvent().getTitle());
+        }
+
+        action.getParticipants().add(eventParticipant);
+        action.setQuantityVacancies(action.getQuantityVacancies() + 1);
+
+        mainEventActionRepository.save(action);
     }
 
     public MainEventAction findById(Long id) {

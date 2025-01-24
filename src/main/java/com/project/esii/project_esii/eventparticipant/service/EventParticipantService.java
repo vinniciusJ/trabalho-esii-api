@@ -1,14 +1,12 @@
 package com.project.esii.project_esii.eventparticipant.service;
 
-import com.project.esii.project_esii.authentication.domain.entity.BaseUser;
 import com.project.esii.project_esii.enums.PersonRole;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDetailsDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.mapper.EventParticipantMapper;
 import com.project.esii.project_esii.eventparticipant.repository.EventParticipantRepository;
-import com.project.esii.project_esii.excpetions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.security.SecurityConfiguration;
+import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
