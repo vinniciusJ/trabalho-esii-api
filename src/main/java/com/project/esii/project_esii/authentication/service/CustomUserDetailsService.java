@@ -28,7 +28,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
         EventParticipant eventParticipant = eventParticipantService.findByEmail(email);
         if (eventParticipant != null) {
-            if(!eventParticipant.getIsEmailVerified()) {
+            if(Boolean.FALSE.equals(eventParticipant.getIsEmailVerified())) {
                 return null;
             }
             return new UserDetailsImpl(eventParticipant);
