@@ -126,8 +126,8 @@
 				<version>10.17.3</version>
 				<configuration>
 					<url>jdbc:postgresql://localhost:5432/events</url>
-					<user>postgres</user>
-					<password>root</password>
+					<user>esii</user>
+					<password>esii</password>
 					<cleanDisabled>false</cleanDisabled>
 				</configuration>
 			</plugin>

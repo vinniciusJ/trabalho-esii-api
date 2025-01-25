@@ -1,7 +1,7 @@
 package com.project.esii.project_esii.exceptions.controller;
 
 import com.project.esii.project_esii.exceptions.config.ErrorDescription;
-import com.project.esii.project_esii.exceptions.type.*;
+import com.project.esii.project_esii.exceptions.domain.*;
 import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +29,16 @@ public class GlobalExceptionHandler {
                 message
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<ErrorDescription> handleEmailNotVerified(EmailNotVerifiedException ex) {
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.FORBIDDEN.value(),
+                ex.getMessage()
+        );
+
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
     @ExceptionHandler(EventActionNotValidForEventSubscriptionException.class)

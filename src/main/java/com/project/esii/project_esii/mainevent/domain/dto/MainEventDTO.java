@@ -1,8 +1,9 @@
 package com.project.esii.project_esii.mainevent.domain.dto;
 
-import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
-import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDetailsDTO;
-import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDetailsDTO;
+import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDTO;
+import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
+import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
+import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -31,9 +32,15 @@ public record MainEventDTO(
         String address,
 
         @NotNull
-        EventManagerDetailsDTO eventManagerDetailsDTO,
+        EventManagerDTO eventManagerDetailsDTO,
 
         @NotNull
-        MainEventTypeDetailsDTO mainEventTypeDetailsDTO
+        MainEventTypeDTO mainEventTypeDetailsDTO,
+
+        @NotNull
+        List<EventParticipantDTO> eventParticipants,
+
+        @NotNull
+        List<MainEventActionDTO> mainEventActionDetailsDTOList
 ) {
 }

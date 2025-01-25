@@ -6,9 +6,10 @@ import com.project.esii.project_esii.eventparticipant.domain.entity.EventPartici
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
-import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDetailsDTO;
+import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
+import com.project.esii.project_esii.maineventaction.mapper.EventActionMapper;
 import com.project.esii.project_esii.maineventaction.service.MainEventActionService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -30,20 +31,20 @@ public class MainEventActionController {
     private final EventParticipantService eventParticipantService;
 
     @PostMapping
-    public ResponseEntity<MainEventActionDetailsDTO> create(@RequestBody MainEventActionFormDTO mainEventActionFormDTO) {
+    public ResponseEntity<MainEventActionDTO> create(@RequestBody MainEventActionFormDTO mainEventActionFormDTO) {
         MainEvent mainEvent = mainEventService.findById(mainEventActionFormDTO.mainEventId());
         EventManager eventManager = eventManagerService.findById(mainEventActionFormDTO.eventManagerId());
 
         MainEventAction mainEventAction = mainEventActionService.save(mainEventActionFormDTO, mainEvent, eventManager);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(mainEventActionService.convertMainEventActionToMainEventActionDetailsDTO(mainEventAction));
+        return ResponseEntity.status(HttpStatus.CREATED).body(EventActionMapper.convertEntityToDTO(mainEventAction));
     }
 
     @GetMapping
-    public ResponseEntity<Page<MainEventActionDetailsDTO>> list(Pageable pageable, Long eventId) {
+    public ResponseEntity<Page<MainEventActionDTO>> list(Pageable pageable, Long eventId) {
         MainEvent mainEvent = mainEventService.getOrNull(eventId);
 
-        Page<MainEventAction> mainEventActionPage;
+        Page<MainEventActionDTO> mainEventActionPage;
 
         if(mainEvent != null) {
             mainEventActionPage = mainEventActionService.findAllByMainEvent(mainEvent, pageable);
@@ -51,14 +52,14 @@ public class MainEventActionController {
            mainEventActionPage = mainEventActionService.findAll(pageable);
         }
 
-        return ResponseEntity.status(HttpStatus.OK).body(mainEventActionService.convertToMainEventActionDetailsDTOPage(mainEventActionPage));
+        return ResponseEntity.ok(mainEventActionPage);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MainEventActionDetailsDTO> findById(@PathVariable Long id) {
+    public ResponseEntity<MainEventActionDTO> findById(@PathVariable Long id) {
         MainEventAction mainEventAction = mainEventActionService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(mainEventActionService.convertMainEventActionToMainEventActionDetailsDTO(mainEventAction));
+        return ResponseEntity.ok(EventActionMapper.convertEntityToDTO(mainEventAction));
     }
 
     @DeleteMapping("/{id}")
@@ -69,13 +70,12 @@ public class MainEventActionController {
         return ResponseEntity.noContent().build();
     }
 
-//    @PatchMapping("/{id}/participant")
-//    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long eventId, @PathVariable Long id, @RequestBody Long participantId) {
-//        MainEvent event = mainEventService.findById(eventId);
-//        EventParticipant eventParticipant = eventParticipantService.findById(id);
-//
-//        mainEventActionService.subscribeParticipant(id, eventParticipant, event);
-//
-//        return ResponseEntity.noContent().build();
-//    }
+    @PatchMapping("/{id}/participant")
+    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long id, @RequestBody Long participantId){
+        EventParticipant participant = eventParticipantService.findById(participantId);
+
+        mainEventActionService.subscribeParticipant(id, participant);
+
+        return ResponseEntity.noContent().build();
+    }
 }

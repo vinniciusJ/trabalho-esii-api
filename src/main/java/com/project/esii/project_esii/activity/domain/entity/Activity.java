@@ -3,11 +3,15 @@ package com.project.esii.project_esii.activity.domain.entity;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Data
+@Data @Builder
+@AllArgsConstructor @NoArgsConstructor
 @MappedSuperclass
 public class Activity {
 

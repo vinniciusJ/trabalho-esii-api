@@ -5,15 +5,14 @@ import com.project.esii.project_esii.eventparticipant.domain.entity.EventPartici
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import jakarta.persistence.*;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
 import java.util.List;
 
-@Data
 @Entity
 @Table(name = "main_event")
-@EqualsAndHashCode(callSuper = true)
+@AllArgsConstructor @NoArgsConstructor
+@Data @EqualsAndHashCode(callSuper = true)
 public class MainEvent extends Activity {
 
     @ManyToOne
@@ -23,6 +22,11 @@ public class MainEvent extends Activity {
     @OneToMany(mappedBy = "mainEvent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainEventAction> mainEventActionList;
 
-//    @OneToMany(mappedBy = "mainEvent", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<EventParticipant> participants;  // Relacionamento com participantes
+    @ManyToMany
+    @JoinTable(
+            name = "main_event_event_participant",
+            joinColumns = @JoinColumn(name = "main_event_id"),
+            inverseJoinColumns = @JoinColumn(name = "event_participant_id")
+    )
+    private List<EventParticipant> eventParticipants;
 }

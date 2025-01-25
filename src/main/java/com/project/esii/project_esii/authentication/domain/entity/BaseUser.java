@@ -8,4 +8,5 @@ public interface BaseUser {
     String getEmail();
     String getPassword();
     PersonRole getPersonRole();
+    Long getId();
 }

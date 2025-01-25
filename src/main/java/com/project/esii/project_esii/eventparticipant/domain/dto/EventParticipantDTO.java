@@ -1,10 +1,11 @@
-package com.project.esii.project_esii.eventmanager.domain.dto;
+package com.project.esii.project_esii.eventparticipant.domain.dto;
 
 import com.project.esii.project_esii.enums.PersonRole;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
-public record EventManagerDetailsDTO(
+public record EventParticipantDTO(
+
         @NotNull
         Long id,
 

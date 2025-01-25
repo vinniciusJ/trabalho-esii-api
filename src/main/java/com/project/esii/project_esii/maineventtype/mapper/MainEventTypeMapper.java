@@ -1,6 +1,6 @@
 package com.project.esii.project_esii.maineventtype.mapper;
 
-import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDetailsDTO;
+import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDTO;
 import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeFormDTO;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import org.mapstruct.Mapper;
@@ -9,5 +9,5 @@ import org.mapstruct.Mapper;
 public interface MainEventTypeMapper {
     MainEventType convertMainEventTypeFormDTOToMainEventType(MainEventTypeFormDTO mainEventTypeFormDTO);
 
-    MainEventTypeDetailsDTO convertMainEventTypeToMainEventTypeDetailsDTO(MainEventType mainEventType);
+    MainEventTypeDTO convertMainEventTypeToMainEventTypeDetailsDTO(MainEventType mainEventType);
 }

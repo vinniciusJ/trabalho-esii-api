@@ -1,14 +1,15 @@
 package com.project.esii.project_esii.maineventaction.domain.dto;
 
-import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
-import com.project.esii.project_esii.mainevent.domain.dto.MainEventDTO;
+import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDTO;
+import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
+import com.project.esii.project_esii.mainevent.domain.dto.MainEventDTO1;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-public record MainEventActionDetailsDTO(
+public record MainEventActionDTO(
 
         @NotNull
         Long id,
@@ -30,13 +31,15 @@ public record MainEventActionDetailsDTO(
         String address,
 
         @NotNull
-        EventManagerDetailsDTO eventManagerDetailsDTO,
+        EventManagerDTO eventManagerDetailsDTO,
 
+        @NotNull
+        Integer availableVacancies,
 
         @NotNull
         Integer quantityVacancies,
 
         @NotNull
-        MainEventDTO mainEventDTO
+        List<EventParticipantDTO> participants
 ) {
 }

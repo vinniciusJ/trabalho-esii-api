@@ -9,19 +9,19 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+import java.util.List;
+import java.util.Set;
+
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
 public class EventParticipant extends NaturalPerson implements BaseUser {
 
-//    @NotNull
-//    @ManyToOne
-//    @JoinColumn(name = "main_event_id", nullable = false)
-//    private MainEvent mainEvent;  // Relacionamento com MainEvent
-//
-//    @ManyToOne
-//    @JoinColumn(name = "main_event_action_id", nullable = false)
-//    private MainEventAction mainEventAction;  // Relacionamento com MainEventAction
+    @ManyToMany(mappedBy = "eventParticipants")
+    private Set<MainEvent> mainEvents;
+
+    @ManyToMany(mappedBy = "eventParticipants")
+    private Set<MainEventAction> mainEventActions;
 
     @Override
     public String getCpfNumber() {

@@ -1,13 +1,14 @@
 package com.project.esii.project_esii.eventmanager.service;
 
-import com.project.esii.project_esii.enums.PersonRole;
-import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetailsDTO;
+import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.mapper.EventManagerMapper;
 import com.project.esii.project_esii.eventmanager.repository.EventManagerRepository;
-import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.domain.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,10 @@ public class EventManagerService {
 
     private final EventManagerRepository eventManagerRepository;
     private final EventManagerMapper eventManagerMapper;
+
+    public Page<EventManagerDTO> findAll(Pageable pageable) {
+        return eventManagerRepository.findAll(pageable).map(eventManagerMapper::convertEntityToDTO);
+    }
 
     public EventManager findById(Long id) {
         return eventManagerRepository.findById(id).orElseThrow(
@@ -38,14 +43,14 @@ public class EventManagerService {
     }
 
     private EventManager convertEventManagerFormDTOToEventManager(EventManagerFormDTO eventManagerFormDTO) {
-        return eventManagerMapper.convertEventManagerFormDTOToEventManager(eventManagerFormDTO);
+        return eventManagerMapper.convertFormDTOToEntity(eventManagerFormDTO);
     }
 
-    public EventManagerDetailsDTO convertEventManagerToEventManagerDetailsDTO(EventManager eventManager) {
-        return eventManagerMapper.convertEventManagerToEventManagerDetailsDTO(eventManager);
+    public EventManagerDTO convertEventManagerToEventManagerDetailsDTO(EventManager eventManager) {
+        return eventManagerMapper.convertEntityToDTO(eventManager);
     }
 
-    public EventManagerDetailsDTO setEmailToVerified(EventManager eventManager) {
+    public EventManagerDTO setEmailToVerified(EventManager eventManager) {
         eventManager.setIsEmailVerified(true);
         eventManagerRepository.save(eventManager);
         return convertEventManagerToEventManagerDetailsDTO(eventManager);

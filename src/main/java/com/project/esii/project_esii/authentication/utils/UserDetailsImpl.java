@@ -37,6 +37,10 @@ public class UserDetailsImpl implements UserDetails {
         return baseUser.getCpfNumber();
     }
 
+    public Long getId() {
+        return baseUser.getId();
+    }
+
     public String getName() {
         return baseUser.getName();
     }

@@ -1,14 +1,16 @@
 package com.project.esii.project_esii.eventparticipant.service;
 
 import com.project.esii.project_esii.enums.PersonRole;
-import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDetailsDTO;
+import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.mapper.EventParticipantMapper;
 import com.project.esii.project_esii.eventparticipant.repository.EventParticipantRepository;
-import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.domain.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +21,10 @@ public class EventParticipantService {
 
     private final EventParticipantRepository eventParticipantRepository;
     private final EventParticipantMapper eventParticipantMapper;
+
+    public Page<EventParticipantDTO> findAll(Pageable pageable) {
+        return eventParticipantRepository.findAll(pageable).map(eventParticipantMapper::convertEntityToDTO);
+    }
 
     public EventParticipant save(EventParticipantFormDTO eventParticipantFormDTO) {
         EventParticipant eventParticipant = convertEventParticipantFormDTOToEventParticipant(eventParticipantFormDTO);
@@ -32,11 +38,11 @@ public class EventParticipantService {
     }
 
     public EventParticipant convertEventParticipantFormDTOToEventParticipant(EventParticipantFormDTO eventParticipantFormDTO) {
-        return eventParticipantMapper.convertEventParticipantFormDTOToEventParticipant(eventParticipantFormDTO);
+        return eventParticipantMapper.convertFormDTOToEntity(eventParticipantFormDTO);
     }
 
-    public EventParticipantDetailsDTO convertEventParticipantToEventParticipantDetailsDTO(EventParticipant eventParticipant) {
-        return eventParticipantMapper.convertEventParticipantToEventParticipantDetailsDTO(eventParticipant);
+    public EventParticipantDTO convertEventParticipantToEventParticipantDetailsDTO(EventParticipant eventParticipant) {
+        return eventParticipantMapper.convertEntityToDTO(eventParticipant);
     }
 
     public EventParticipant findById(Long id) {
@@ -51,7 +57,7 @@ public class EventParticipantService {
         );
     }
 
-    public EventParticipantDetailsDTO setEmailToVerified(EventParticipant eventParticipant) {
+    public EventParticipantDTO setEmailToVerified(EventParticipant eventParticipant) {
         eventParticipant.setIsEmailVerified(true);
         eventParticipantRepository.save(eventParticipant);
         return convertEventParticipantToEventParticipantDetailsDTO(eventParticipant);

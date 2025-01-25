@@ -1,7 +1,7 @@
 package com.project.esii.project_esii.maineventtype.service;
 
-import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDetailsDTO;
+import com.project.esii.project_esii.exceptions.domain.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeDTO;
 import com.project.esii.project_esii.maineventtype.domain.dto.MainEventTypeFormDTO;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import com.project.esii.project_esii.maineventtype.mapper.MainEventTypeMapper;
@@ -12,7 +12,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Service
@@ -38,7 +37,7 @@ public class MainEventTypeService {
         return mainEventTypeMapper.convertMainEventTypeFormDTOToMainEventType(mainEventTypeFormDTO);
     }
 
-    public MainEventTypeDetailsDTO convertMainEventTypeToMainEventTypeDetailsDTO(MainEventType mainEventType) {
+    public MainEventTypeDTO convertMainEventTypeToMainEventTypeDetailsDTO(MainEventType mainEventType) {
         return mainEventTypeMapper.convertMainEventTypeToMainEventTypeDetailsDTO(mainEventType);
     }
 
@@ -46,7 +45,7 @@ public class MainEventTypeService {
         return mainEventTypeRepository.findAll(pageable);
     }
 
-    public Page<MainEventTypeDetailsDTO> convertToMainEventTypeDetailsDTOPage(Page<MainEventType> mainEventTypePage) {
+    public Page<MainEventTypeDTO> convertToMainEventTypeDetailsDTOPage(Page<MainEventType> mainEventTypePage) {
         return mainEventTypePage.map(mainEventTypeMapper::convertMainEventTypeToMainEventTypeDetailsDTO);
     }
 
@@ -58,11 +57,11 @@ public class MainEventTypeService {
         return mainEventTypeRepository.findAll();
     }
 
-    public List<MainEventTypeDetailsDTO> convertToMainEventTypeDetailsDTOList(List<MainEventType> mainEventTypeList) {
+    public List<MainEventTypeDTO> convertToMainEventTypeDetailsDTOList(List<MainEventType> mainEventTypeList) {
         return mainEventTypeList.stream().map(mainEventTypeMapper::convertMainEventTypeToMainEventTypeDetailsDTO).collect(Collectors.toList());
     }
 
-    public MainEventTypeDetailsDTO update(MainEventType mainEventType, MainEventTypeFormDTO mainEventTypeFormDTO) {
+    public MainEventTypeDTO update(MainEventType mainEventType, MainEventTypeFormDTO mainEventTypeFormDTO) {
         MainEventType updatedMainEventType = convertMainEventTypeFormDTOToMainEventType(mainEventTypeFormDTO);
         updatedMainEventType.setId(mainEventType.getId());
 

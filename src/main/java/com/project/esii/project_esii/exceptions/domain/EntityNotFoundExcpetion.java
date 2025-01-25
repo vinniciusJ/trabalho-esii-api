@@ -1,4 +1,4 @@
-package com.project.esii.project_esii.exceptions.type;
+package com.project.esii.project_esii.exceptions.domain;
 
 import lombok.Getter;
 

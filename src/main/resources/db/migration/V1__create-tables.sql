@@ -68,6 +68,13 @@ CREATE TABLE event_subscription_main_event_action_list (
                                                            main_event_action_list_id BIGINT NOT NULL UNIQUE
 );
 
+-- Tabela de junção: main_event_action_event_participant
+CREATE TABLE main_event_action_event_participant (
+                                                     main_event_action_id BIGINT NOT NULL,
+                                                     event_participant_id BIGINT NOT NULL,
+                                                     PRIMARY KEY (main_event_action_id, event_participant_id)
+);
+
 -- Adição de chaves estrangeiras
 
 -- Relacionamento entre event_subscription e event_participant
@@ -117,3 +124,24 @@ ALTER TABLE main_event_action
     ADD CONSTRAINT FK_main_event_action_event
         FOREIGN KEY (main_event_id)
             REFERENCES main_event;
+
+-- Relacionamento entre main_event_action_event_participant e main_event_action
+ALTER TABLE main_event_action_event_participant
+    ADD CONSTRAINT FK_main_event_action_event_participant_action
+        FOREIGN KEY (main_event_action_id)
+            REFERENCES main_event_action (id);
+
+-- Relacionamento entre main_event_action_event_participant e event_participant
+ALTER TABLE main_event_action_event_participant
+    ADD CONSTRAINT FK_main_event_action_event_participant_participant
+        FOREIGN KEY (event_participant_id)
+            REFERENCES event_participant (id);
+
+-- Tabela de junção: main_event_event_participant
+CREATE TABLE main_event_event_participant (
+                                              main_event_id BIGINT NOT NULL,
+                                              event_participant_id BIGINT NOT NULL,
+                                              PRIMARY KEY (main_event_id, event_participant_id),
+                                              CONSTRAINT FK_main_event FOREIGN KEY (main_event_id) REFERENCES main_event (id),
+                                              CONSTRAINT FK_event_participant FOREIGN KEY (event_participant_id) REFERENCES event_participant (id)
+);
