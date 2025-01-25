@@ -28,8 +28,13 @@ public class EventSubscription {
     @JoinColumn(name = "main_event_id", nullable = false)
     private MainEvent mainEvent;
 
-    @NotNull
-    @Column(nullable = false)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+
+    @OneToMany
+    @JoinTable(
+            name = "event_subscription_main_event_action_list",
+            joinColumns = @JoinColumn(name = "event_subscription_id"),
+            inverseJoinColumns = @JoinColumn(name = "main_event_action_list_id")
+    )
     private List<MainEventAction> mainEventActionList;
+
 }

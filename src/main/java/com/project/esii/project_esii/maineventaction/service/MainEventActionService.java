@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class MainEventActionService {
@@ -92,6 +94,18 @@ public class MainEventActionService {
 
     public void removeVacancyFromMainEventAction(MainEventAction mainEventAction) {
         mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() - 1);
+        mainEventActionRepository.save(mainEventAction);
+    }
+
+    public void addVacancyToMainEventActions(List<MainEventAction> mainEventActionList) {
+        for(MainEventAction mainEventAction : mainEventActionList) {
+            mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() + 1);
+            mainEventActionRepository.save(mainEventAction);
+        }
+    }
+
+    public void addVacancyToMainEventAction(MainEventAction mainEventAction) {
+        mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() + 1);
         mainEventActionRepository.save(mainEventAction);
     }
 }

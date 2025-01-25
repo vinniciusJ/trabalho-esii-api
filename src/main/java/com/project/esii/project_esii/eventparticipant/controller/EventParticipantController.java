@@ -7,6 +7,7 @@ import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipan
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
 import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.exceptions.type.RegistrationEmailException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,10 @@ public class EventParticipantController {
         if(eventManagerService.existsByEmail(eventParticipantFormDTO.email())) throw new ExistingRegistrationEmailException("Organizador de Evento", eventParticipantFormDTO.email());
         EventParticipant eventParticipant = eventParticipantService.save(eventParticipantFormDTO);
 
-        emailSenderService.sendRegistrationVerificationEmail("/event-participant/verify-email/" + eventParticipant.getId(), eventParticipant.getEmail());
+        if(!emailSenderService.sendRegistrationVerificationEmail("/event-participant/verify-email/" + eventParticipant.getId(), eventParticipant.getEmail())) {
+            eventParticipantService.delete(eventParticipant);
+            throw new RegistrationEmailException();
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(eventParticipantService.convertEventParticipantToEventParticipantDetailsDTO(eventParticipant));
     }

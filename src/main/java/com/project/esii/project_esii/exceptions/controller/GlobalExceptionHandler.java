@@ -21,6 +21,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(RegistrationEmailException.class)
+    public ResponseEntity<ErrorDescription> handleRegistrationEmailException(RegistrationEmailException ex) {
+        String message = "Não foi possível enviar o email de verificação, o cadastro não foi concluído";
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
     @ExceptionHandler(EventActionNotValidForEventSubscriptionException.class)
     public ResponseEntity<ErrorDescription> handleEventActionNotValidForEventSubscriptionException(EventActionNotValidForEventSubscriptionException ex) {
         String message = "Não existe inscrição para esta ação";

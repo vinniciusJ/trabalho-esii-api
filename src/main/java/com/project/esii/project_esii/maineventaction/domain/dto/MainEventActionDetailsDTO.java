@@ -4,6 +4,7 @@ import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDetails
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDTO;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

@@ -14,7 +14,7 @@ public class EmailSenderService {
 
     private final JavaMailSender javaMailSender;
 
-    public void sendRegistrationVerificationEmail(String url, String dstEmail) {
+    public boolean sendRegistrationVerificationEmail(String url, String dstEmail) {
         String link = "http://localhost:8080" + url;
 
         String emailBody = """
@@ -33,14 +33,17 @@ public class EmailSenderService {
         try {
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+            helper.setFrom("egsoft502@gmail.com");
             helper.setTo(dstEmail);
             helper.setSubject("Verifique seu cadastro em Eventos+!");
             helper.setText(emailBody, true);
 
             javaMailSender.send(mimeMessage);
             log.info("Email sent!");
+            return true;
         } catch (Exception e) {
             log.info("Email not sent! {}", e.getMessage());
+            return false;
         }
     }
 }

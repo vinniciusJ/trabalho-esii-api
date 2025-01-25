@@ -80,6 +80,7 @@ public class EventSubscriptionService {
     }
 
     public void delete(EventSubscription eventSubscription) {
+
         eventSubscriptionRepository.delete(eventSubscription);
     }
 

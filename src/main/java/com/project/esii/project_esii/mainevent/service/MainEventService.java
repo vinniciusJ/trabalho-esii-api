@@ -76,6 +76,5 @@ public class MainEventService {
         if(!mainEvent.getMainEventActionList().contains(mainEventAction)) {
             throw new EventActionNotValidForEventException();
         }
-
     }
 }

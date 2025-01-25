@@ -11,12 +11,14 @@ import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventaction.service.MainEventActionService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Log4j2
 @RestController
 @RequestMapping("/event-subscription")
 @RequiredArgsConstructor
@@ -44,11 +46,13 @@ public class EventSubscriptionController {
         MainEvent mainEvent = mainEventService.findById(eventSubscriptionFormDTO.mainEventId());
         EventParticipant eventParticipant = eventParticipantService.findByCpfNumber(eventSubscriptionFormDTO.eventParticipantCpf());
         EventSubscription eventSubscription = eventSubscriptionService.findByMainEventAndEventParticipant(mainEvent, eventParticipant);
-        MainEventAction mainEventAction = mainEventActionService.findById(eventSubscriptionFormDTO.mainEventId());
+        MainEventAction mainEventAction = mainEventActionService.findById(eventSubscriptionFormDTO.mainEventActionId());
+
+        log.info(mainEventAction.getId());
 
         mainEventService.verifyIfEventHasMainEventAction(eventSubscription.getMainEvent(), mainEventAction);
-        mainEventActionService.verifyIfMainEventActionHasVacancies(mainEventAction);
         mainEventActionService.verifyIfAlreadyExistsSubscription(eventSubscription, mainEventAction);
+        mainEventActionService.verifyIfMainEventActionHasVacancies(mainEventAction);
 
         mainEventActionService.removeVacancyFromMainEventAction(mainEventAction);
 
@@ -63,20 +67,22 @@ public class EventSubscriptionController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> cancelEventSubscription(@PathVariable Long id) {
+    public ResponseEntity<Void> cancelEventActionSubscription(@PathVariable Long id) {
         EventSubscription eventSubscription = eventSubscriptionService.findById(id);
+        mainEventActionService.addVacancyToMainEventActions(eventSubscription.getMainEventActionList());
         eventSubscriptionService.delete(eventSubscription);
 
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}/action")
-    public ResponseEntity<Void> cancelEventSubscription(@PathVariable Long id, Long mainEventActionId) {
+    public ResponseEntity<Void> cancelEventActionSubscription(@PathVariable Long id, Long mainEventActionId) {
         EventSubscription eventSubscription = eventSubscriptionService.findById(id);
         MainEventAction mainEventAction = mainEventActionService.findById(mainEventActionId);
 
         eventSubscriptionService.verifyIfEventSubscriptionHasMainEventAction(eventSubscription, mainEventAction);
 
+        mainEventActionService.addVacancyToMainEventAction(mainEventAction);
         eventSubscriptionService.delete(eventSubscription, mainEventAction);
 
         return ResponseEntity.noContent().build();

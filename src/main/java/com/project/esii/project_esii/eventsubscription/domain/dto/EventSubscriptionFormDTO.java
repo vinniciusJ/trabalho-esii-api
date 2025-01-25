@@ -10,6 +10,5 @@ public record EventSubscriptionFormDTO(
         @NotNull
         Long mainEventId,
 
-        @NotNull
         Long mainEventActionId
 ) { }
