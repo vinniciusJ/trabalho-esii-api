@@ -1,6 +1,27 @@
-version: '3.8'
+# mvn clean package
+# docker-compose up --build
+# docker-compose up -d
 
 services:
+  app:
+    image: openjdk:17-jdk-alpine
+    container_name: trabalho-esii-api
+    working_dir: /app
+    volumes:
+      - ./target:/app/target
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    command: ["java", "-jar", "/app/target/events-0.0.1-SNAPSHOT.jar"]
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/events
+      SPRING_DATASOURCE_USERNAME: esii
+      SPRING_DATASOURCE_PASSWORD: esii
+      SPRING_DATASOURCE_DRIVER-CLASS-NAME: org.postgresql.Driver
+    networks:
+      - esii-network
+
   db:
     image: postgres:latest
     container_name: esii_db
@@ -12,6 +33,11 @@ services:
       - "5432:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - esii-network
 
 volumes:
   postgres_data:
+
+networks:
+  esii-network:
