@@ -33,20 +33,26 @@ public class EventMapper {
         );
     }
 
-    public static MainEvent convertFormToEntity(MainEventFormDTO event, MainEventType type, EventManager manager) {
-        MainEvent mainEvent = new MainEvent();
+    public static MainEvent convertFormToEntity(MainEvent mainEvent, MainEventFormDTO event, MainEventType type, EventManager manager) {
+        MainEvent updatedMainEvent = new MainEvent();
 
-        mainEvent.setTitle(event.title());
-        mainEvent.setStartDateTime(event.startDateTime());
-        mainEvent.setEndDateTime(event.endDateTime());
-        mainEvent.setRegistrationPrice(event.registrationPrice());
-        mainEvent.setAddress(event.address());
-        mainEvent.setEventManager(manager);
-        mainEvent.setMainEventType(type);
-        mainEvent.setMainEventActionList(new ArrayList<>());
-        mainEvent.setEventParticipants(new ArrayList<>());
+        updatedMainEvent.setTitle(event.title());
+        updatedMainEvent.setStartDateTime(event.startDateTime());
+        updatedMainEvent.setEndDateTime(event.endDateTime());
+        updatedMainEvent.setRegistrationPrice(event.registrationPrice());
+        updatedMainEvent.setAddress(event.address());
+        updatedMainEvent.setEventManager(manager);
+        updatedMainEvent.setMainEventType(type);
 
-        return mainEvent;
+        if(mainEvent != null) {
+            updatedMainEvent.setMainEventActionList(mainEvent.getMainEventActionList());
+            updatedMainEvent.setEventParticipants(mainEvent.getEventParticipants());
+        } else {
+            updatedMainEvent.setMainEventActionList(new ArrayList<>());
+            updatedMainEvent.setEventParticipants(new ArrayList<>());
+        }
+
+        return updatedMainEvent;
     }
 
     private static List<EventParticipantDTO> convertParticipantsToDTO(List<EventParticipant> participants) {

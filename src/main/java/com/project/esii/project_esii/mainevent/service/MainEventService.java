@@ -37,7 +37,7 @@ public class MainEventService {
     }
 
     public MainEvent save(MainEventFormDTO mainEventFormDTO, EventManager eventManager, MainEventType mainEventType) {
-        MainEvent mainEvent = EventMapper.convertFormToEntity(mainEventFormDTO, mainEventType, eventManager);
+        MainEvent mainEvent = EventMapper.convertFormToEntity(null, mainEventFormDTO, mainEventType, eventManager);
 
         return mainEventRepository.save(mainEvent);
     }
@@ -53,7 +53,7 @@ public class MainEventService {
     }
 
     public MainEventDTO update(MainEvent mainEvent, EventManager eventManager, MainEventType mainEventType, MainEventFormDTO mainEventFormDTO) {
-        MainEvent updatedMainEvent = EventMapper.convertFormToEntity(mainEventFormDTO, mainEventType, eventManager);
+        MainEvent updatedMainEvent = EventMapper.convertFormToEntity(mainEvent, mainEventFormDTO, mainEventType, eventManager);
         updatedMainEvent.setId(mainEvent.getId());
 
         mainEventRepository.save(updatedMainEvent);

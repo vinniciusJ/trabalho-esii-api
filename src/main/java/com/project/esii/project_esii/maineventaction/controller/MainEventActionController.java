@@ -63,8 +63,8 @@ public class MainEventActionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/participant")
-    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long id, @RequestBody Long participantId){
+    @PatchMapping("/{id}/participant/{participantId}")
+    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long id, @PathVariable Long participantId){
         EventParticipant participant = eventParticipantService.findById(participantId);
 
         mainEventActionService.subscribeParticipant(id, participant);
@@ -72,8 +72,8 @@ public class MainEventActionController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping("/{id}/participant")
-    public ResponseEntity<Void> unsubscribeParticipant(@PathVariable Long id, @RequestBody Long participantId){
+    @DeleteMapping("/{id}/participant/{participantId}")
+    public ResponseEntity<Void> unsubscribeParticipant(@PathVariable Long id, @PathVariable Long participantId){
         EventParticipant participant = eventParticipantService.findById(participantId);
 
         mainEventActionService.unsubscribeParticipant(id, participant);
