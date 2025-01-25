@@ -4,6 +4,7 @@ import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
+import com.project.esii.project_esii.mainevent.domain.dto.SubscriptionDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
@@ -63,9 +64,9 @@ public class MainEventActionController {
         return ResponseEntity.noContent().build();
     }
 
-    @PatchMapping("/{id}/participant")
-    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long id, @RequestBody Long participantId){
-        EventParticipant participant = eventParticipantService.findById(participantId);
+    @PostMapping("/{id}/participant")
+    public ResponseEntity<Void> subscribeParticipant(@PathVariable Long id, @RequestBody SubscriptionDTO subscriptionDTO){
+        EventParticipant participant = eventParticipantService.findById(subscriptionDTO.participantId());
 
         mainEventActionService.subscribeParticipant(id, participant);
 
