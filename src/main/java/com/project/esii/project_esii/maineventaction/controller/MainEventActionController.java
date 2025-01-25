@@ -71,4 +71,13 @@ public class MainEventActionController {
 
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{id}/participant")
+    public ResponseEntity<Void> unsubscribeParticipant(@PathVariable Long id, @RequestBody Long participantId){
+        EventParticipant participant = eventParticipantService.findById(participantId);
+
+        mainEventActionService.unsubscribeParticipant(id, participant);
+
+        return ResponseEntity.noContent().build();
+    }
 }

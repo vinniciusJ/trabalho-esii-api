@@ -10,6 +10,7 @@ import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.mapper.EventMapper;
 import com.project.esii.project_esii.mainevent.repository.MainEventRepository;
+import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
 import com.project.esii.project_esii.specification.BaseSpecification;
 import com.project.esii.project_esii.specification.Search;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -67,6 +69,27 @@ public class MainEventService {
         }
 
         mainEvent.getEventParticipants().add(participant);
+
+        mainEventRepository.save(mainEvent);
+    }
+
+    public void unsubscribeParticipant(Long id, EventParticipant participant){
+        MainEvent mainEvent = findById(id);
+
+        List<MainEventAction> actions = mainEvent.getMainEventActionList();
+        List<EventParticipant> participants = mainEvent.getEventParticipants();
+
+        participants.remove(participant);
+
+        for(MainEventAction action : actions){
+            List<EventParticipant> actionParticipants = action.getEventParticipants();
+
+            actionParticipants.remove(participant);
+            action.setEventParticipants(actionParticipants);
+        }
+
+        mainEvent.setEventParticipants(participants);
+        mainEvent.setMainEventActionList(actions);
 
         mainEventRepository.save(mainEvent);
     }

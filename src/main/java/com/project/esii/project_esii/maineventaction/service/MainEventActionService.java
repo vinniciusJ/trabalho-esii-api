@@ -20,6 +20,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
 @RequiredArgsConstructor
@@ -56,6 +58,16 @@ public class MainEventActionService {
         }
 
         action.getEventParticipants().add(participant);
+
+        mainEventActionRepository.save(action);
+    }
+
+    public void unsubscribeParticipant(Long id, EventParticipant participant){
+        MainEventAction action = findById(id);
+        List<EventParticipant> participants = action.getEventParticipants();
+
+        participants.remove(participant);
+        action.setEventParticipants(participants);
 
         mainEventActionRepository.save(action);
     }
