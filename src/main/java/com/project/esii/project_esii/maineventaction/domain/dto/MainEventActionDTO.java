@@ -2,7 +2,6 @@ package com.project.esii.project_esii.maineventaction.domain.dto;
 
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
-import com.project.esii.project_esii.mainevent.domain.dto.MainEventDTO1;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 

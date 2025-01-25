@@ -3,18 +3,23 @@ package com.project.esii.project_esii.maineventaction.service;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.exceptions.domain.*;
+import com.project.esii.project_esii.mainevent.domain.dto.MainEventFiltersDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
+import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFiltersDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventaction.mapper.EventActionMapper;
 import com.project.esii.project_esii.maineventaction.repository.MainEventActionRepository;
+import com.project.esii.project_esii.specification.BaseSpecification;
+import com.project.esii.project_esii.specification.Search;
+import com.project.esii.project_esii.specification.SpecificationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -28,8 +33,10 @@ public class MainEventActionService {
         return mainEventActionRepository.save(mainEventAction);
     }
 
-    public Page<MainEventActionDTO> findAll(Pageable pageable) {
-        return mainEventActionRepository.findAll(pageable).map(EventActionMapper::convertEntityToDTO);
+    public Page<MainEventActionDTO> findAll(MainEventActionFiltersDTO filters, Pageable pageable) {
+        Specification<MainEventAction> mainEventActionSpecification = generateSpecification(filters);
+
+        return mainEventActionRepository.findAll(mainEventActionSpecification, pageable).map(EventActionMapper::convertEntityToDTO);
     }
 
     public void subscribeParticipant(Long id, EventParticipant participant){
@@ -63,36 +70,13 @@ public class MainEventActionService {
         mainEventActionRepository.delete(mainEventAction);
     }
 
-    public Page<MainEventActionDTO> findAllByMainEvent(MainEvent mainEvent, Pageable pageable) {
-        return mainEventActionRepository.findAllByMainEvent(mainEvent, pageable).map(EventActionMapper::convertEntityToDTO);
-    }
+    private Specification<MainEventAction> generateSpecification(MainEventActionFiltersDTO filters){
+        Search<Long> eventIdCriteria = SpecificationUtils.generateEqualsCriteria("mainEvent.id", filters.eventId());
+        Search<Long> eventManagerCriteria = SpecificationUtils.generateEqualsCriteria("eventManager.id", filters.eventManagerId());
 
-    public void verifyIfMainEventActionHasVacancies(MainEventAction mainEventAction) {
-        if(mainEventAction.getQuantityVacancies() == 0) {
-            throw new NoVacancyForMainEventActionException(mainEventAction.getId().toString());
-        }
-    }
+        Specification<MainEventAction> eventSpecification = new BaseSpecification<>(eventIdCriteria);
+        Specification<MainEventAction> eventManagerSpecification = new BaseSpecification<>(eventManagerCriteria);
 
-//    public void verifyIfAlreadyExistsSubscription(EventSubscription eventSubscription, MainEventAction mainEventAction) {
-//        if(eventSubscription.getMainEventActionList().contains(mainEventAction)) {
-//            throw new ExistingEventSubscriptionException();
-//        }
-//    }
-
-    public void removeVacancyFromMainEventAction(MainEventAction mainEventAction) {
-        mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() - 1);
-        mainEventActionRepository.save(mainEventAction);
-    }
-
-    public void addVacancyToMainEventActions(List<MainEventAction> mainEventActionList) {
-        for(MainEventAction mainEventAction : mainEventActionList) {
-            mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() + 1);
-            mainEventActionRepository.save(mainEventAction);
-        }
-    }
-
-    public void addVacancyToMainEventAction(MainEventAction mainEventAction) {
-        mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() + 1);
-        mainEventActionRepository.save(mainEventAction);
+        return Specification.where(eventSpecification.and(eventManagerSpecification));
     }
 }

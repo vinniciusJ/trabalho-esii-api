@@ -7,6 +7,7 @@ import com.project.esii.project_esii.eventparticipant.service.EventParticipantSe
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.service.MainEventService;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
+import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFiltersDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
 import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventaction.mapper.EventActionMapper;
@@ -41,18 +42,10 @@ public class MainEventActionController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<MainEventActionDTO>> list(Pageable pageable, Long eventId) {
-        MainEvent mainEvent = mainEventService.getOrNull(eventId);
+    public ResponseEntity<Page<MainEventActionDTO>> list(Pageable pageable, MainEventActionFiltersDTO filters) {
+        Page<MainEventActionDTO> mainEventActions = mainEventActionService.findAll(filters, pageable);
 
-        Page<MainEventActionDTO> mainEventActionPage;
-
-        if(mainEvent != null) {
-            mainEventActionPage = mainEventActionService.findAllByMainEvent(mainEvent, pageable);
-        } else {
-           mainEventActionPage = mainEventActionService.findAll(pageable);
-        }
-
-        return ResponseEntity.ok(mainEventActionPage);
+        return ResponseEntity.ok(mainEventActions);
     }
 
     @GetMapping("/{id}")

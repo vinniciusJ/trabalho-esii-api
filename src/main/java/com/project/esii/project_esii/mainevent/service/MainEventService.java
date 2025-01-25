@@ -4,17 +4,20 @@ import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.exceptions.domain.EmailNotVerifiedException;
 import com.project.esii.project_esii.exceptions.domain.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.exceptions.domain.EventActionNotValidForEventException;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventDTO;
+import com.project.esii.project_esii.mainevent.domain.dto.MainEventFiltersDTO;
 import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.mainevent.mapper.EventMapper;
 import com.project.esii.project_esii.mainevent.repository.MainEventRepository;
-import com.project.esii.project_esii.maineventaction.domain.entity.MainEventAction;
 import com.project.esii.project_esii.maineventtype.domain.entity.MainEventType;
+import com.project.esii.project_esii.specification.BaseSpecification;
+import com.project.esii.project_esii.specification.Search;
+import com.project.esii.project_esii.specification.SpecificationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
@@ -25,8 +28,10 @@ public class MainEventService {
 
     private final MainEventRepository mainEventRepository;
 
-    public Page<MainEventDTO> findAll(Pageable pageable) {
-        return mainEventRepository.findAll(pageable).map(EventMapper::convertEntityToDTO);
+    public Page<MainEventDTO> findAll(MainEventFiltersDTO filters, Pageable pageable) {
+        Specification<MainEvent> mainEventSpecification = generateSpecification(filters);
+
+        return mainEventRepository.findAll(mainEventSpecification, pageable).map(EventMapper::convertEntityToDTO);
     }
 
     public MainEvent save(MainEventFormDTO mainEventFormDTO, EventManager eventManager, MainEventType mainEventType) {
@@ -66,18 +71,13 @@ public class MainEventService {
         mainEventRepository.save(mainEvent);
     }
 
-    public Page<MainEventDTO> findAllByEventManager(EventManager eventManager, Pageable pageable) {
-        return mainEventRepository.findAllByEventManager(eventManager, pageable).map(EventMapper::convertEntityToDTO);
-    }
+    private Specification<MainEvent> generateSpecification(MainEventFiltersDTO filters){
+        Search<Long> eventTypeIdCriteria = SpecificationUtils.generateEqualsCriteria("mainEventType.id", filters.eventTypeId());
+        Search<Long> eventManagerCriteria = SpecificationUtils.generateEqualsCriteria("eventManager.id", filters.eventManagerId());
 
-    public MainEvent getOrNull(Long id) {
-        if(id == null) return null;
-        return mainEventRepository.findById(id).orElse(null);
-    }
+        Specification<MainEvent> eventTypeSpecification = new BaseSpecification<>(eventTypeIdCriteria);
+        Specification<MainEvent> eventManagerSpecification = new BaseSpecification<>(eventManagerCriteria);
 
-    public void verifyIfEventHasMainEventAction(MainEvent mainEvent, MainEventAction mainEventAction) {
-        if(!mainEvent.getMainEventActionList().contains(mainEventAction)) {
-            throw new EventActionNotValidForEventException();
-        }
+        return Specification.where(eventTypeSpecification.and(eventManagerSpecification));
     }
 }
