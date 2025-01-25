@@ -1,10 +1,7 @@
 package com.project.esii.project_esii.exceptions.controller;
 
 import com.project.esii.project_esii.exceptions.config.ErrorDescription;
-import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
-import com.project.esii.project_esii.exceptions.type.EventActionNotValidForEventException;
-import com.project.esii.project_esii.exceptions.type.ExistingEventSubscriptionException;
-import com.project.esii.project_esii.exceptions.type.ExistingRegistrationEmailException;
+import com.project.esii.project_esii.exceptions.type.*;
 import com.project.esii.project_esii.excpetions.type.NotAllowedToUpdateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +21,29 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
+    @ExceptionHandler(EventActionNotValidForEventSubscriptionException.class)
+    public ResponseEntity<ErrorDescription> handleEventActionNotValidForEventSubscriptionException(EventActionNotValidForEventSubscriptionException ex) {
+        String message = "Não existe inscrição para esta ação";
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(NoVacancyForMainEventActionException.class)
+    public ResponseEntity<ErrorDescription> handleNoVacancyForMainEventActionException(NoVacancyForMainEventActionException ex) {
+        String message = "Não há vagas disponíveis para a ação do evento com id " + ex.getValue();
+        ErrorDescription errorResponse = new ErrorDescription(
+                HttpStatus.NOT_FOUND.value(),
+                message
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
     @ExceptionHandler(ExistingEventSubscriptionException.class)
     public ResponseEntity<ErrorDescription> handleExistingEventSubscriptionException(ExistingEventSubscriptionException ex) {
-        String message = "Inscrição já existe para usuário nesse evento";
+        String message = "Inscrição já existente";
         ErrorDescription errorResponse = new ErrorDescription(
                 HttpStatus.NOT_FOUND.value(),
                 message

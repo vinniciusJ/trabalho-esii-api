@@ -30,6 +30,6 @@ public class EventSubscription {
 
     @NotNull
     @Column(nullable = false)
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MainEventAction> mainEventActionList;
 }

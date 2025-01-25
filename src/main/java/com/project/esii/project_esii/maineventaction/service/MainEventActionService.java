@@ -2,7 +2,10 @@ package com.project.esii.project_esii.maineventaction.service;
 
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
+import com.project.esii.project_esii.eventsubscription.domain.entity.EventSubscription;
 import com.project.esii.project_esii.exceptions.type.EntityNotFoundExcpetion;
+import com.project.esii.project_esii.exceptions.type.ExistingEventSubscriptionException;
+import com.project.esii.project_esii.exceptions.type.NoVacancyForMainEventActionException;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDetailsDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
@@ -73,5 +76,22 @@ public class MainEventActionService {
 
     public Page<MainEventAction> findAllByMainEvent(MainEvent mainEvent, Pageable pageable) {
         return mainEventActionRepository.findAllByMainEvent(mainEvent, pageable);
+    }
+
+    public void verifyIfMainEventActionHasVacancies(MainEventAction mainEventAction) {
+        if(mainEventAction.getQuantityVacancies() == 0) {
+            throw new NoVacancyForMainEventActionException(mainEventAction.getId().toString());
+        }
+    }
+
+    public void verifyIfAlreadyExistsSubscription(EventSubscription eventSubscription, MainEventAction mainEventAction) {
+        if(eventSubscription.getMainEventActionList().contains(mainEventAction)) {
+            throw new ExistingEventSubscriptionException();
+        }
+    }
+
+    public void removeVacancyFromMainEventAction(MainEventAction mainEventAction) {
+        mainEventAction.setQuantityVacancies(mainEventAction.getQuantityVacancies() - 1);
+        mainEventActionRepository.save(mainEventAction);
     }
 }

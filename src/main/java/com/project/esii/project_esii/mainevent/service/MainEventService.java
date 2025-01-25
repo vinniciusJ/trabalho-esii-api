@@ -72,7 +72,7 @@ public class MainEventService {
         return mainEventRepository.findById(id).orElse(null);
     }
 
-    public void verifyIfHasMainEventAction(MainEvent mainEvent, MainEventAction mainEventAction) {
+    public void verifyIfEventHasMainEventAction(MainEvent mainEvent, MainEventAction mainEventAction) {
         if(!mainEvent.getMainEventActionList().contains(mainEventAction)) {
             throw new EventActionNotValidForEventException();
         }

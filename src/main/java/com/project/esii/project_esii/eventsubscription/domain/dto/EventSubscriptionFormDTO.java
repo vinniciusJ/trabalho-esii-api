@@ -8,5 +8,8 @@ public record EventSubscriptionFormDTO(
         String eventParticipantCpf,
 
         @NotNull
-        Long mainEventId
+        Long mainEventId,
+
+        @NotNull
+        Long mainEventActionId
 ) { }
