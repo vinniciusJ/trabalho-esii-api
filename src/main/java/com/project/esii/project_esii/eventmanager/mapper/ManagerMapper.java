@@ -25,6 +25,7 @@ public class ManagerMapper {
         manager.setCpf(new Cpf(form.cpfNumber()));
         manager.setPhone(form.phone());
         manager.setEmail(form.email());
+        manager.setPassword(form.password());
         manager.setIsEmailVerified(form.isEmailVerified());
         manager.setPersonRole(PersonRole.ROLE_EVENT_MANAGER);
 
