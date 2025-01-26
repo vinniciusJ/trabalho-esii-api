@@ -25,6 +25,7 @@ public class ParticipantMapper {
         participant.setName(form.name());
         participant.setPhone(form.phone());
         participant.setEmail(form.email());
+        participant.setPassword(form.password());
         participant.setIsEmailVerified(false);
         participant.setPersonRole(PersonRole.ROLE_EVENT_PARTICIPANT);
 
