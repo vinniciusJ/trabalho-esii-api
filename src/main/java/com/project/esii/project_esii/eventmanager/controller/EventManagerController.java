@@ -4,6 +4,7 @@ import com.project.esii.project_esii.emailsender.service.EmailSenderService;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerDTO;
 import com.project.esii.project_esii.eventmanager.domain.dto.EventManagerFormDTO;
 import com.project.esii.project_esii.eventmanager.domain.entity.EventManager;
+import com.project.esii.project_esii.eventmanager.mapper.ManagerMapper;
 import com.project.esii.project_esii.eventmanager.service.EventManagerService;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
 import com.project.esii.project_esii.exceptions.domain.ExistingRegistrationEmailException;
@@ -40,7 +41,7 @@ public class EventManagerController {
 
         emailSenderService.sendRegistrationVerificationEmail("/event-manager/verify-email/" + eventManager.getId(), eventManager.getEmail());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventManagerService.convertEventManagerToEventManagerDetailsDTO(eventManager));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ManagerMapper.convertEntityToDTO(eventManager));
     }
 
     @PostMapping("/verify-email/{id}")
@@ -55,7 +56,7 @@ public class EventManagerController {
     public ResponseEntity<EventManagerDTO> getEventManagerById(@PathVariable Long id) {
         EventManager eventManager = eventManagerService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(eventManagerService.convertEventManagerToEventManagerDetailsDTO(eventManager));
+        return ResponseEntity.status(HttpStatus.OK).body(ManagerMapper.convertEntityToDTO(eventManager));
     }
 
     @DeleteMapping("/{id}")

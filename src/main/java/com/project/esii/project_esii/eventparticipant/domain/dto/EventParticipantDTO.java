@@ -22,9 +22,6 @@ public record EventParticipantDTO(
         String email,
 
         @NotNull
-        boolean isEmailVerified,
-
-        @NotNull
-        PersonRole personRole
+        boolean isEmailVerified
 ) {
 }

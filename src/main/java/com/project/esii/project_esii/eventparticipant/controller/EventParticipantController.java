@@ -6,6 +6,7 @@ import com.project.esii.project_esii.eventmanager.service.EventManagerService;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
+import com.project.esii.project_esii.eventparticipant.mapper.ParticipantMapper;
 import com.project.esii.project_esii.eventparticipant.service.EventParticipantService;
 import com.project.esii.project_esii.exceptions.domain.ExistingRegistrationEmailException;
 import com.project.esii.project_esii.exceptions.domain.RegistrationEmailException;
@@ -42,7 +43,7 @@ public class EventParticipantController {
             throw new RegistrationEmailException();
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(eventParticipantService.convertEventParticipantToEventParticipantDetailsDTO(eventParticipant));
+        return ResponseEntity.status(HttpStatus.CREATED).body(ParticipantMapper.convertEntityToDTO(eventParticipant));
     }
 
     @PostMapping("/verify-email/{id}")
@@ -57,7 +58,7 @@ public class EventParticipantController {
     public ResponseEntity<EventParticipantDTO> getEventParticipantById(@PathVariable Long id) {
         EventParticipant eventParticipant = eventParticipantService.findById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(eventParticipantService.convertEventParticipantToEventParticipantDetailsDTO(eventParticipant));
+        return ResponseEntity.status(HttpStatus.OK).body(ParticipantMapper.convertEntityToDTO(eventParticipant));
     }
 
     @DeleteMapping("/{id}")

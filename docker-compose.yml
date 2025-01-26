@@ -26,6 +26,7 @@ services:
       - MAIL_SENDER_PORT=587
       - MAIL_SENDER_USER=egsoft502@gmail.com
       - MAIL_SENDER_PASSWORD=vzjr nnab ffwq rput
+      - spring_profiles_active=prod
     depends_on:
       - events-db
 

@@ -4,7 +4,7 @@ import com.project.esii.project_esii.enums.PersonRole;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantFormDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
-import com.project.esii.project_esii.eventparticipant.mapper.EventParticipantMapper;
+import com.project.esii.project_esii.eventparticipant.mapper.ParticipantMapper;
 import com.project.esii.project_esii.eventparticipant.repository.EventParticipantRepository;
 import com.project.esii.project_esii.exceptions.domain.EntityNotFoundExcpetion;
 import lombok.RequiredArgsConstructor;
@@ -20,14 +20,13 @@ import org.springframework.stereotype.Service;
 public class EventParticipantService {
 
     private final EventParticipantRepository eventParticipantRepository;
-    private final EventParticipantMapper eventParticipantMapper;
 
     public Page<EventParticipantDTO> findAll(Pageable pageable) {
-        return eventParticipantRepository.findAll(pageable).map(eventParticipantMapper::convertEntityToDTO);
+        return eventParticipantRepository.findAll(pageable).map(ParticipantMapper::convertEntityToDTO);
     }
 
     public EventParticipant save(EventParticipantFormDTO eventParticipantFormDTO) {
-        EventParticipant eventParticipant = convertEventParticipantFormDTOToEventParticipant(eventParticipantFormDTO);
+        EventParticipant eventParticipant = ParticipantMapper.convertFormDTOToEntity(eventParticipantFormDTO);
 
         eventParticipant.setPersonRole(PersonRole.ROLE_EVENT_PARTICIPANT);
 
@@ -37,13 +36,6 @@ public class EventParticipantService {
         return eventParticipantRepository.save(eventParticipant);
     }
 
-    public EventParticipant convertEventParticipantFormDTOToEventParticipant(EventParticipantFormDTO eventParticipantFormDTO) {
-        return eventParticipantMapper.convertFormDTOToEntity(eventParticipantFormDTO);
-    }
-
-    public EventParticipantDTO convertEventParticipantToEventParticipantDetailsDTO(EventParticipant eventParticipant) {
-        return eventParticipantMapper.convertEntityToDTO(eventParticipant);
-    }
 
     public EventParticipant findById(Long id) {
         return eventParticipantRepository.findById(id).orElseThrow(
@@ -51,16 +43,11 @@ public class EventParticipantService {
         );
     }
 
-    public EventParticipant findByCpfNumber(String cpfNumber) {
-        return eventParticipantRepository.findByCpfCpfNumber(cpfNumber).orElseThrow(
-                () -> new EntityNotFoundExcpetion("EventParticipant", "cpfNumber", cpfNumber)
-        );
-    }
-
     public EventParticipantDTO setEmailToVerified(EventParticipant eventParticipant) {
         eventParticipant.setIsEmailVerified(true);
         eventParticipantRepository.save(eventParticipant);
-        return convertEventParticipantToEventParticipantDetailsDTO(eventParticipant);
+
+        return ParticipantMapper.convertEntityToDTO(eventParticipant);
     }
 
     public void delete(EventParticipant eventParticipant) {

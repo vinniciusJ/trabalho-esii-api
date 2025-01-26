@@ -5,7 +5,6 @@ import com.project.esii.project_esii.eventmanager.mapper.ManagerMapper;
 import com.project.esii.project_esii.eventparticipant.domain.dto.EventParticipantDTO;
 import com.project.esii.project_esii.eventparticipant.domain.entity.EventParticipant;
 import com.project.esii.project_esii.eventparticipant.mapper.ParticipantMapper;
-import com.project.esii.project_esii.mainevent.domain.dto.MainEventFormDTO;
 import com.project.esii.project_esii.mainevent.domain.entity.MainEvent;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionDTO;
 import com.project.esii.project_esii.maineventaction.domain.dto.MainEventActionFormDTO;
@@ -25,7 +24,7 @@ public class EventActionMapper {
                 action.getEndDateTime(),
                 action.getRegistrationPrice(),
                 action.getAddress(),
-                ManagerMapper.convertFromEntityToDTO(action.getEventManager()),
+                ManagerMapper.convertEntityToDTO(action.getEventManager()),
                 availableVacancies,
                 action.getQuantityVacancies(),
                 convertParticipantsToDTO(action.getEventParticipants())
@@ -49,6 +48,6 @@ public class EventActionMapper {
     }
 
     private static List<EventParticipantDTO> convertParticipantsToDTO(List<EventParticipant> participants) {
-        return participants.stream().map(ParticipantMapper::convertFromEntityToDTO).toList();
+        return participants.stream().map(ParticipantMapper::convertEntityToDTO).toList();
     }
 }

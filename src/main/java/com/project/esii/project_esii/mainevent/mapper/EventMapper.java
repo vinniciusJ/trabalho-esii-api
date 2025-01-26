@@ -26,7 +26,7 @@ public class EventMapper {
                 event.getEndDateTime(),
                 event.getRegistrationPrice(),
                 event.getAddress(),
-                ManagerMapper.convertFromEntityToDTO(event.getEventManager()),
+                ManagerMapper.convertEntityToDTO(event.getEventManager()),
                 EventTypeMapper.convertFromEntityToDTO(event.getMainEventType()),
                 convertParticipantsToDTO(event.getEventParticipants()),
                 convertEventActionsToDTO(event.getMainEventActionList())
@@ -56,7 +56,7 @@ public class EventMapper {
     }
 
     private static List<EventParticipantDTO> convertParticipantsToDTO(List<EventParticipant> participants) {
-        return participants.stream().map(ParticipantMapper::convertFromEntityToDTO).toList();
+        return participants.stream().map(ParticipantMapper::convertEntityToDTO).toList();
     }
 
     private static List<MainEventActionDTO> convertEventActionsToDTO(List<MainEventAction> eventActions) {

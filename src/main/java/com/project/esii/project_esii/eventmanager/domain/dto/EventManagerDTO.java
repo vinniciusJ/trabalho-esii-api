@@ -21,9 +21,6 @@ public record EventManagerDTO(
         String email,
 
         @NotNull
-        boolean isEmailVerified,
-
-        @NotNull
-        PersonRole personRole
+        boolean isEmailVerified
 ) {
 }
