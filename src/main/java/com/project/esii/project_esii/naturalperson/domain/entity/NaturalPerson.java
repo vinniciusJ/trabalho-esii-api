@@ -5,6 +5,7 @@ import com.project.esii.project_esii.person.domain.entity.Person;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.MappedSuperclass;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -14,6 +15,6 @@ import lombok.EqualsAndHashCode;
     public class NaturalPerson extends Person {
 
         @Embedded
-        @NotBlank
+        @NotNull
         private Cpf cpf;
     }

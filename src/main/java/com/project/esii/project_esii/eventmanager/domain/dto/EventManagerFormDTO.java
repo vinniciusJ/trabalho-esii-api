@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 
 public record EventManagerFormDTO(
 
-        @NotBlank
+        @NotNull
         String cpfNumber,
 
         @NotBlank
