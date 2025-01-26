@@ -21,10 +21,8 @@ import java.util.List;
 @RequestMapping("/event-manager")
 @RequiredArgsConstructor
 public class EventManagerController {
-
     private final EventManagerService eventManagerService;
     private final EmailSenderService emailSenderService;
-    private final EventParticipantService eventParticipantService;
 
     @GetMapping
     public ResponseEntity<Page<EventManagerDTO>> findAll(Pageable pageable) {
@@ -35,9 +33,16 @@ public class EventManagerController {
 
     @PostMapping
     public ResponseEntity<EventManagerDTO> create(@RequestBody EventManagerFormDTO eventManagerFormDTO) {
-        if(eventParticipantService.existsByEmail(eventManagerFormDTO.email())) throw new ExistingRegistrationEmailException("Participante de Evento", eventManagerFormDTO.email());
-
         EventManager eventManager = eventManagerService.save(eventManagerFormDTO);
+
+        emailSenderService.sendRegistrationVerificationEmail("/event-manager/verify-email/" + eventManager.getId(), eventManager.getEmail());
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(ManagerMapper.convertEntityToDTO(eventManager));
+    }
+
+    @PostMapping("/admin")
+    public ResponseEntity<EventManagerDTO> createAdmin(@RequestBody EventManagerFormDTO eventManagerFormDTO) {
+        EventManager eventManager = eventManagerService.saveAdmin(eventManagerFormDTO);
 
         emailSenderService.sendRegistrationVerificationEmail("/event-manager/verify-email/" + eventManager.getId(), eventManager.getEmail());
 
